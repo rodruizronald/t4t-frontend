@@ -22,7 +22,7 @@ export default function FilterMenuContainer({
           <DateFilterContent
             options={filterOptions.date}
             value={activeFilters.date}
-            onChange={(event) => onFilterChange('date', event.target.value)}
+            onChange={event => onFilterChange('date', event.target.value)}
           />
         )
 
@@ -31,10 +31,10 @@ export default function FilterMenuContainer({
           <SearchFilterContent
             options={filterOptions.company}
             selectedValues={activeFilters.company}
-            onChange={(value) => onFilterChange('company', value)}
+            onChange={value => onFilterChange('company', value)}
             searchValue={companySearchInput}
             onSearchChange={onCompanySearchChange}
-            searchPlaceholder="Add a company"
+            searchPlaceholder='Add a company'
           />
         )
 
@@ -45,7 +45,7 @@ export default function FilterMenuContainer({
           <CheckboxFilterContent
             options={filterOptions[filter]}
             selectedValues={activeFilters[filter]}
-            onChange={(value) => onFilterChange(filter, value)}
+            onChange={value => onFilterChange(filter, value)}
           />
         )
 
@@ -55,11 +55,7 @@ export default function FilterMenuContainer({
   }
 
   return (
-    <FilterMenu
-      anchorEl={anchorEl}
-      open={open}
-      onClose={onClose}
-    >
+    <FilterMenu anchorEl={anchorEl} open={open} onClose={onClose}>
       {renderFilterContent()}
     </FilterMenu>
   )

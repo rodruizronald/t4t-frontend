@@ -38,11 +38,7 @@ export const EXPERIENCE_OPTIONS = [
   'Executive',
 ]
 
-export const MODE_OPTIONS = [
-    'On-site', 
-    'Remote',
-    'Hybrid'
-]
+export const MODE_OPTIONS = ['On-site', 'Remote', 'Hybrid']
 
 export const TYPE_OPTIONS = [
   'Full-time',

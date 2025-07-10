@@ -5,10 +5,10 @@ import { PAGINATION } from '../../constants/job'
 export function useJobPagination(allJobs, searchQuery, activeFilters) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedJobId, setSelectedJobId] = useState(null)
-  
+
   // Get current page from URL, default to 1
   const currentPage = parseInt(searchParams.get('p')) || PAGINATION.DEFAULT_PAGE
-  
+
   // Calculate pagination values
   const totalJobs = allJobs.length
   const totalPages = Math.ceil(totalJobs / PAGINATION.PAGE_SIZE)
@@ -21,7 +21,7 @@ export function useJobPagination(allJobs, searchQuery, activeFilters) {
   }, [allJobs, startIndex, endIndex])
 
   // Handle page change
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     const newSearchParams = new URLSearchParams(searchParams)
 
     if (newPage === PAGINATION.DEFAULT_PAGE) {
@@ -84,11 +84,11 @@ export function useJobPagination(allJobs, searchQuery, activeFilters) {
     totalPages,
     totalJobs,
     currentPageJobs,
-    
+
     // Job selection state
     selectedJobId,
     setSelectedJobId,
-    
+
     // Actions
     handlePageChange,
   }

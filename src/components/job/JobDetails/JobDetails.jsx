@@ -67,7 +67,7 @@ export default function JobDetails({ job }) {
         >
           <Box>
             <Typography
-              variant="h6"
+              variant='h6'
               sx={{
                 fontWeight: 700,
                 color: '#0a66c2',
@@ -79,7 +79,7 @@ export default function JobDetails({ job }) {
               {job.title}
             </Typography>
             <Typography
-              variant="body2"
+              variant='body2'
               sx={{
                 color: '#333',
                 fontSize: '0.875rem',
@@ -90,7 +90,7 @@ export default function JobDetails({ job }) {
             </Typography>
           </Box>
           <Button
-            variant="contained"
+            variant='contained'
             sx={{
               bgcolor: '#0a66c2',
               borderRadius: '20px',
@@ -136,7 +136,7 @@ export default function JobDetails({ job }) {
                   {job.company?.charAt(0)?.toUpperCase() || 'C'}
                 </Avatar>
                 <Typography
-                  variant="h5"
+                  variant='h5'
                   sx={{ fontWeight: 600, color: '#333' }}
                 >
                   {job.company}
@@ -145,7 +145,7 @@ export default function JobDetails({ job }) {
 
               {/* Job Title */}
               <Typography
-                variant="h4"
+                variant='h4'
                 sx={{
                   fontWeight: 700,
                   color: '#0a66c2',
@@ -158,7 +158,7 @@ export default function JobDetails({ job }) {
 
               {/* Posted Date */}
               <Typography
-                variant="body2"
+                variant='body2'
                 sx={{
                   color: '#666',
                   mb: 2,
@@ -169,12 +169,12 @@ export default function JobDetails({ job }) {
               </Typography>
 
               {/* Job Meta Info with Icons */}
-              <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mb: 3 }}>
+              <Stack direction='row' spacing={2} flexWrap='wrap' sx={{ mb: 3 }}>
                 {job.location && (
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     <LocationOn sx={{ fontSize: 18, color: '#666' }} />
                     <Typography
-                      variant="body1"
+                      variant='body1'
                       sx={{ color: '#666', fontSize: '1rem', fontWeight: 500 }}
                     >
                       {job.location}
@@ -186,7 +186,7 @@ export default function JobDetails({ job }) {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     <WorkOutline sx={{ fontSize: 18, color: '#666' }} />
                     <Typography
-                      variant="body1"
+                      variant='body1'
                       sx={{ color: '#666', fontSize: '1rem', fontWeight: 500 }}
                     >
                       {job.workMode}
@@ -198,7 +198,7 @@ export default function JobDetails({ job }) {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     <Schedule sx={{ fontSize: 18, color: '#666' }} />
                     <Typography
-                      variant="body1"
+                      variant='body1'
                       sx={{ color: '#666', fontSize: '1rem', fontWeight: 500 }}
                     >
                       {job.jobType}
@@ -210,7 +210,7 @@ export default function JobDetails({ job }) {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     <TrendingUp sx={{ fontSize: 18, color: '#666' }} />
                     <Typography
-                      variant="body1"
+                      variant='body1'
                       sx={{ color: '#666', fontSize: '1rem', fontWeight: 500 }}
                     >
                       {job.experience}
@@ -221,8 +221,8 @@ export default function JobDetails({ job }) {
 
               {/* Apply Button */}
               <Button
-                variant="contained"
-                size="large"
+                variant='contained'
+                size='large'
                 sx={{
                   bgcolor: '#0a66c2',
                   borderRadius: '25px',
@@ -240,11 +240,11 @@ export default function JobDetails({ job }) {
 
             {/* Description */}
             <Box sx={{ mb: 3 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+              <Typography variant='h6' sx={{ fontWeight: 600, mb: 2 }}>
                 Description
               </Typography>
               <Typography
-                variant="body1"
+                variant='body1'
                 sx={{ lineHeight: 1.6, color: '#333' }}
               >
                 {job.description}
@@ -254,11 +254,15 @@ export default function JobDetails({ job }) {
             {/* Responsibilities */}
             {job.responsibilities && job.responsibilities.length > 0 && (
               <Box sx={{ mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+                <Typography variant='h6' sx={{ fontWeight: 600, mb: 2 }}>
                   Responsibilities
                 </Typography>
                 <ul
-                  style={{ paddingLeft: '20px', lineHeight: 1.6, color: '#333' }}
+                  style={{
+                    paddingLeft: '20px',
+                    lineHeight: 1.6,
+                    color: '#333',
+                  }}
                 >
                   {job.responsibilities.map((responsibility, index) => (
                     <li key={index}>{responsibility}</li>
@@ -270,61 +274,65 @@ export default function JobDetails({ job }) {
             {/* Requirements */}
             {job.requirements && (
               <Box sx={{ mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+                <Typography variant='h6' sx={{ fontWeight: 600, mb: 2 }}>
                   Requirements
                 </Typography>
 
                 {/* Must Have */}
-                {job.requirements.mustHave && job.requirements.mustHave.length > 0 && (
-                  <Box sx={{ mb: 3 }}>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: 600, mb: 1.5, color: '#333' }}
-                    >
-                      Must Have
-                    </Typography>
-                    <ul
-                      style={{
-                        paddingLeft: '20px',
-                        lineHeight: 1.6,
-                        color: '#333',
-                      }}
-                    >
-                      {job.requirements.mustHave.map((requirement, index) => (
-                        <li key={index}>{requirement}</li>
-                      ))}
-                    </ul>
-                  </Box>
-                )}
+                {job.requirements.mustHave &&
+                  job.requirements.mustHave.length > 0 && (
+                    <Box sx={{ mb: 3 }}>
+                      <Typography
+                        variant='subtitle1'
+                        sx={{ fontWeight: 600, mb: 1.5, color: '#333' }}
+                      >
+                        Must Have
+                      </Typography>
+                      <ul
+                        style={{
+                          paddingLeft: '20px',
+                          lineHeight: 1.6,
+                          color: '#333',
+                        }}
+                      >
+                        {job.requirements.mustHave.map((requirement, index) => (
+                          <li key={index}>{requirement}</li>
+                        ))}
+                      </ul>
+                    </Box>
+                  )}
 
                 {/* Nice To Have */}
-                {job.requirements.niceToHave && job.requirements.niceToHave.length > 0 && (
-                  <Box sx={{ mb: 3 }}>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: 600, mb: 1.5, color: '#333' }}
-                    >
-                      Nice To Have
-                    </Typography>
-                    <ul
-                      style={{
-                        paddingLeft: '20px',
-                        lineHeight: 1.6,
-                        color: '#333',
-                      }}
-                    >
-                      {job.requirements.niceToHave.map((requirement, index) => (
-                        <li key={index}>{requirement}</li>
-                      ))}
-                    </ul>
-                  </Box>
-                )}
+                {job.requirements.niceToHave &&
+                  job.requirements.niceToHave.length > 0 && (
+                    <Box sx={{ mb: 3 }}>
+                      <Typography
+                        variant='subtitle1'
+                        sx={{ fontWeight: 600, mb: 1.5, color: '#333' }}
+                      >
+                        Nice To Have
+                      </Typography>
+                      <ul
+                        style={{
+                          paddingLeft: '20px',
+                          lineHeight: 1.6,
+                          color: '#333',
+                        }}
+                      >
+                        {job.requirements.niceToHave.map(
+                          (requirement, index) => (
+                            <li key={index}>{requirement}</li>
+                          )
+                        )}
+                      </ul>
+                    </Box>
+                  )}
 
                 {/* Technologies */}
                 {job.technologies && job.technologies.length > 0 && (
                   <Box sx={{ mb: 0 }}>
                     <Typography
-                      variant="subtitle1"
+                      variant='subtitle1'
                       sx={{ fontWeight: 600, mb: 1.5, color: '#333' }}
                     >
                       Technologies
@@ -354,11 +362,15 @@ export default function JobDetails({ job }) {
             {/* Benefits */}
             {job.benefits && job.benefits.length > 0 && (
               <Box sx={{ mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+                <Typography variant='h6' sx={{ fontWeight: 600, mb: 2 }}>
                   Benefits
                 </Typography>
                 <ul
-                  style={{ paddingLeft: '20px', lineHeight: 1.6, color: '#333' }}
+                  style={{
+                    paddingLeft: '20px',
+                    lineHeight: 1.6,
+                    color: '#333',
+                  }}
                 >
                   {job.benefits.map((benefit, index) => (
                     <li key={index}>{benefit}</li>
@@ -378,10 +390,10 @@ export default function JobDetails({ job }) {
             }}
           >
             <Box>
-              <Typography variant="h5" sx={{ color: '#666', mb: 1 }}>
+              <Typography variant='h5' sx={{ color: '#666', mb: 1 }}>
                 Select a Job
               </Typography>
-              <Typography variant="body1" sx={{ color: '#999' }}>
+              <Typography variant='body1' sx={{ color: '#999' }}>
                 Choose a job from the list to view details
               </Typography>
             </Box>

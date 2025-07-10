@@ -40,12 +40,12 @@ export default function JobList({
         }}
       >
         <Typography
-          variant="body1"
+          variant='body1'
           sx={{ fontWeight: 'bold', fontSize: 'body1.fontSize' }}
         >
           {searchQuery || 'All Jobs'}
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: 'body1.fontSize' }}>
+        <Typography variant='body1' sx={{ fontSize: 'body1.fontSize' }}>
           {resultsCount} results
         </Typography>
       </Box>
@@ -85,10 +85,10 @@ export default function JobList({
                 p: 3,
               }}
             >
-              <Typography variant="h6" color="text.secondary" sx={{ mb: 1 }}>
+              <Typography variant='h6' color='text.secondary' sx={{ mb: 1 }}>
                 No jobs found
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant='body2' color='text.secondary'>
                 Try adjusting your search criteria or filters
               </Typography>
             </Box>

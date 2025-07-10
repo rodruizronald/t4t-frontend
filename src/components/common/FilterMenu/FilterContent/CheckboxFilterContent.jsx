@@ -5,13 +5,13 @@ export default function CheckboxFilterContent({
   selectedValues,
   onChange,
 }) {
-  const handleCheckboxChange = (value) => {
+  const handleCheckboxChange = value => {
     onChange(value)
   }
 
   return (
     <>
-      {options.map((option) => (
+      {options.map(option => (
         <FormControlLabel
           key={option}
           control={

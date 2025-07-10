@@ -1,475 +1,481 @@
 export const mockJobs = [
   {
-    "id": 1,
-    "title": "Senior Software Engineer",
-    "company": "Canonical",
-    "location": "Costa Rica",
-    "workMode": "Remote",
-    "jobType": "Full-time",
-    "experience": "Mid-Senior level",
-    "technologies": ["React", "Node.js", "TypeScript", "AWS", "Docker"],
-    "postedDate": "2 days ago",
-    "description":
-      "We are looking for a Senior Software Engineer to join our team and help build the next generation of cloud-native applications. You will work with cutting-edge technologies and collaborate with a global team of talented engineers. This role offers excellent growth opportunities and the chance to make a significant impact on our products.",
-    "responsibilities": [
-      "Develop and maintain high-quality software applications",
-      "Collaborate with cross-functional teams to define and implement new features",
-      "Write clean, maintainable, and efficient code",
-      "Participate in code reviews and provide constructive feedback",
-      "Stay up-to-date with emerging technologies and industry trends"
+    id: 1,
+    title: 'Senior Software Engineer',
+    company: 'Canonical',
+    location: 'Costa Rica',
+    workMode: 'Remote',
+    jobType: 'Full-time',
+    experience: 'Mid-Senior level',
+    technologies: ['React', 'Node.js', 'TypeScript', 'AWS', 'Docker'],
+    postedDate: '2 days ago',
+    description:
+      'We are looking for a Senior Software Engineer to join our team and help build the next generation of cloud-native applications. You will work with cutting-edge technologies and collaborate with a global team of talented engineers. This role offers excellent growth opportunities and the chance to make a significant impact on our products.',
+    responsibilities: [
+      'Develop and maintain high-quality software applications',
+      'Collaborate with cross-functional teams to define and implement new features',
+      'Write clean, maintainable, and efficient code',
+      'Participate in code reviews and provide constructive feedback',
+      'Stay up-to-date with emerging technologies and industry trends',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Computer Science or related field",
-        "3+ years of experience in software development",
-        "Strong proficiency in JavaScript and React",
-        "Experience with RESTful APIs and database design",
-        "Excellent problem-solving and communication skills"
+        '3+ years of experience in software development',
+        'Strong proficiency in JavaScript and React',
+        'Experience with RESTful APIs and database design',
+        'Excellent problem-solving and communication skills',
       ],
-      "niceToHave": [
-        "Experience with cloud platforms (AWS, Azure, GCP)",
-        "Knowledge of containerization (Docker, Kubernetes)",
-        "Familiarity with CI/CD pipelines",
-        "Previous experience in a startup environment",
-        "Contributions to open-source projects"
-      ]
+      niceToHave: [
+        'Experience with cloud platforms (AWS, Azure, GCP)',
+        'Knowledge of containerization (Docker, Kubernetes)',
+        'Familiarity with CI/CD pipelines',
+        'Previous experience in a startup environment',
+        'Contributions to open-source projects',
+      ],
     },
-    "benefits": [
-      "Competitive salary and equity package",
-      "Comprehensive health, dental, and vision insurance",
-      "Flexible working hours and remote work options",
-      "Professional development opportunities",
-      "Modern office space with state-of-the-art equipment"
-    ]
+    benefits: [
+      'Competitive salary and equity package',
+      'Comprehensive health, dental, and vision insurance',
+      'Flexible working hours and remote work options',
+      'Professional development opportunities',
+      'Modern office space with state-of-the-art equipment',
+    ],
   },
   {
-    "id": 2,
-    "title": "Frontend Developer",
-    "company": "HCLTech",
-    "location": "San José",
-    "workMode": "Hybrid",
-    "jobType": "Full-time",
-    "experience": "Entry level",
-    "technologies": ["Vue.js", "JavaScript", "CSS", "HTML", "Git"],
-    "postedDate": "1 week ago",
-    "description":
+    id: 2,
+    title: 'Frontend Developer',
+    company: 'HCLTech',
+    location: 'San José',
+    workMode: 'Hybrid',
+    jobType: 'Full-time',
+    experience: 'Entry level',
+    technologies: ['Vue.js', 'JavaScript', 'CSS', 'HTML', 'Git'],
+    postedDate: '1 week ago',
+    description:
       "Join our dynamic frontend team to create engaging user interfaces for our web applications. You'll work with modern frameworks and collaborate with designers to bring creative visions to life. Perfect opportunity for someone starting their career in web development.",
-    "responsibilities": [
-      "Build responsive web interfaces using Vue.js",
-      "Collaborate with UX/UI designers to implement designs",
-      "Optimize applications for maximum speed and scalability",
-      "Ensure cross-browser compatibility",
-      "Participate in agile development processes"
+    responsibilities: [
+      'Build responsive web interfaces using Vue.js',
+      'Collaborate with UX/UI designers to implement designs',
+      'Optimize applications for maximum speed and scalability',
+      'Ensure cross-browser compatibility',
+      'Participate in agile development processes',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Computer Science or related field",
-        "1+ years of experience with JavaScript",
-        "Knowledge of HTML5 and CSS3",
-        "Understanding of responsive design principles",
-        "Basic knowledge of version control (Git)"
+        '1+ years of experience with JavaScript',
+        'Knowledge of HTML5 and CSS3',
+        'Understanding of responsive design principles',
+        'Basic knowledge of version control (Git)',
       ],
-      "niceToHave": [
-        "Experience with Vue.js or similar frameworks",
-        "Knowledge of CSS preprocessors (Sass, Less)",
-        "Understanding of build tools (Webpack, Vite)",
-        "Experience with testing frameworks",
-        "Basic understanding of backend technologies"
-      ]
+      niceToHave: [
+        'Experience with Vue.js or similar frameworks',
+        'Knowledge of CSS preprocessors (Sass, Less)',
+        'Understanding of build tools (Webpack, Vite)',
+        'Experience with testing frameworks',
+        'Basic understanding of backend technologies',
+      ],
     },
-    "benefits": [
-      "Health and dental insurance",
-      "Flexible work schedule",
-      "Learning and development budget",
-      "Team building activities",
-      "Free snacks and beverages"
-    ]
+    benefits: [
+      'Health and dental insurance',
+      'Flexible work schedule',
+      'Learning and development budget',
+      'Team building activities',
+      'Free snacks and beverages',
+    ],
   },
   {
-    "id": 3,
-    "title": "DevOps Engineer",
-    "company": "Blue Yonder",
-    "location": "Remote",
-    "workMode": "Remote",
-    "jobType": "Full-time",
-    "experience": "Mid-Senior level",
-    "technologies": ["Kubernetes", "Docker", "AWS", "Terraform", "Jenkins"],
-    "postedDate": "3 days ago",
-    "description":
+    id: 3,
+    title: 'DevOps Engineer',
+    company: 'Blue Yonder',
+    location: 'Remote',
+    workMode: 'Remote',
+    jobType: 'Full-time',
+    experience: 'Mid-Senior level',
+    technologies: ['Kubernetes', 'Docker', 'AWS', 'Terraform', 'Jenkins'],
+    postedDate: '3 days ago',
+    description:
       "We're seeking a skilled DevOps Engineer to help streamline our development and deployment processes. You'll work with cutting-edge cloud technologies and help build scalable infrastructure that supports our growing platform.",
-    "responsibilities": [
-      "Design and maintain CI/CD pipelines",
-      "Manage cloud infrastructure on AWS",
-      "Implement monitoring and logging solutions",
-      "Automate deployment processes",
-      "Ensure system security and compliance"
+    responsibilities: [
+      'Design and maintain CI/CD pipelines',
+      'Manage cloud infrastructure on AWS',
+      'Implement monitoring and logging solutions',
+      'Automate deployment processes',
+      'Ensure system security and compliance',
     ],
-    "requirements": {
-      "mustHave": [
-        "3+ years of experience in DevOps or similar role",
-        "Strong knowledge of containerization (Docker, Kubernetes)",
-        "Experience with cloud platforms (AWS preferred)",
-        "Proficiency in Infrastructure as Code (Terraform, CloudFormation)",
-        "Understanding of CI/CD principles and tools"
+    requirements: {
+      mustHave: [
+        '3+ years of experience in DevOps or similar role',
+        'Strong knowledge of containerization (Docker, Kubernetes)',
+        'Experience with cloud platforms (AWS preferred)',
+        'Proficiency in Infrastructure as Code (Terraform, CloudFormation)',
+        'Understanding of CI/CD principles and tools',
       ],
-      "niceToHave": [
-        "AWS certifications",
-        "Experience with monitoring tools (Prometheus, Grafana)",
-        "Knowledge of scripting languages (Python, Bash)",
-        "Experience with microservices architecture",
-        "Understanding of security best practices"
-      ]
+      niceToHave: [
+        'AWS certifications',
+        'Experience with monitoring tools (Prometheus, Grafana)',
+        'Knowledge of scripting languages (Python, Bash)',
+        'Experience with microservices architecture',
+        'Understanding of security best practices',
+      ],
     },
-    "benefits": [
-      "Competitive compensation package",
-      "100% remote work flexibility",
-      "Professional certification reimbursement",
-      "Health and wellness programs",
-      "Annual company retreat"
-    ]
+    benefits: [
+      'Competitive compensation package',
+      '100% remote work flexibility',
+      'Professional certification reimbursement',
+      'Health and wellness programs',
+      'Annual company retreat',
+    ],
   },
   {
-    "id": 4,
-    "title": "Data Scientist",
-    "company": "Thales",
-    "location": "Cartago",
-    "workMode": "On-site",
-    "jobType": "Full-time",
-    "experience": "Mid-Senior level",
-    "technologies": ["Python", "R", "SQL", "TensorFlow", "Pandas"],
-    "postedDate": "5 days ago",
-    "description":
+    id: 4,
+    title: 'Data Scientist',
+    company: 'Thales',
+    location: 'Cartago',
+    workMode: 'On-site',
+    jobType: 'Full-time',
+    experience: 'Mid-Senior level',
+    technologies: ['Python', 'R', 'SQL', 'TensorFlow', 'Pandas'],
+    postedDate: '5 days ago',
+    description:
       "Join our data science team to extract insights from complex datasets and build predictive models. You'll work on challenging problems in aerospace and defense, contributing to innovative solutions that make a real-world impact.",
-    "responsibilities": [
-      "Analyze large datasets to identify patterns and trends",
-      "Develop machine learning models for predictive analytics",
-      "Create data visualizations and reports for stakeholders",
-      "Collaborate with engineering teams to implement models",
-      "Research and implement new data science techniques"
+    responsibilities: [
+      'Analyze large datasets to identify patterns and trends',
+      'Develop machine learning models for predictive analytics',
+      'Create data visualizations and reports for stakeholders',
+      'Collaborate with engineering teams to implement models',
+      'Research and implement new data science techniques',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Master's degree in Data Science, Statistics, or related field",
-        "3+ years of experience in data science or analytics",
-        "Strong proficiency in Python and R",
-        "Experience with machine learning frameworks",
-        "Solid understanding of statistical methods"
+        '3+ years of experience in data science or analytics',
+        'Strong proficiency in Python and R',
+        'Experience with machine learning frameworks',
+        'Solid understanding of statistical methods',
       ],
-      "niceToHave": [
-        "PhD in quantitative field",
-        "Experience with deep learning frameworks",
-        "Knowledge of big data technologies (Spark, Hadoop)",
-        "Experience in aerospace or defense industry",
-        "Publications in peer-reviewed journals"
-      ]
+      niceToHave: [
+        'PhD in quantitative field',
+        'Experience with deep learning frameworks',
+        'Knowledge of big data technologies (Spark, Hadoop)',
+        'Experience in aerospace or defense industry',
+        'Publications in peer-reviewed journals',
+      ],
     },
-    "benefits": [
-      "Excellent salary and bonus structure",
-      "Comprehensive health coverage",
-      "Retirement savings plan with company matching",
-      "Tuition reimbursement program",
-      "On-site fitness center and cafeteria"
-    ]
+    benefits: [
+      'Excellent salary and bonus structure',
+      'Comprehensive health coverage',
+      'Retirement savings plan with company matching',
+      'Tuition reimbursement program',
+      'On-site fitness center and cafeteria',
+    ],
   },
   {
-    "id": 5,
-    "title": "Mobile App Developer",
-    "company": "DXC Technology",
-    "location": "San José",
-    "workMode": "Hybrid",
-    "jobType": "Contract",
-    "experience": "Associate",
-    "technologies": ["React Native", "Swift", "Kotlin", "Firebase", "Redux"],
-    "postedDate": "1 day ago",
-    "description":
+    id: 5,
+    title: 'Mobile App Developer',
+    company: 'DXC Technology',
+    location: 'San José',
+    workMode: 'Hybrid',
+    jobType: 'Contract',
+    experience: 'Associate',
+    technologies: ['React Native', 'Swift', 'Kotlin', 'Firebase', 'Redux'],
+    postedDate: '1 day ago',
+    description:
       "We're looking for a talented mobile developer to join our team on a contract basis. You'll be responsible for developing cross-platform mobile applications that deliver exceptional user experiences across iOS and Android platforms.",
-    "responsibilities": [
-      "Develop cross-platform mobile applications using React Native",
-      "Implement native features for iOS and Android",
-      "Integrate with backend APIs and third-party services",
-      "Optimize app performance and user experience",
-      "Collaborate with product managers and designers"
+    responsibilities: [
+      'Develop cross-platform mobile applications using React Native',
+      'Implement native features for iOS and Android',
+      'Integrate with backend APIs and third-party services',
+      'Optimize app performance and user experience',
+      'Collaborate with product managers and designers',
     ],
-    "requirements": {
-      "mustHave": [
-        "2+ years of mobile app development experience",
-        "Proficiency in React Native",
-        "Knowledge of iOS and Android development",
-        "Experience with mobile app deployment",
-        "Understanding of mobile UI/UX principles"
+    requirements: {
+      mustHave: [
+        '2+ years of mobile app development experience',
+        'Proficiency in React Native',
+        'Knowledge of iOS and Android development',
+        'Experience with mobile app deployment',
+        'Understanding of mobile UI/UX principles',
       ],
-      "niceToHave": [
-        "Native iOS development (Swift)",
-        "Native Android development (Kotlin/Java)",
-        "Experience with mobile testing frameworks",
-        "Knowledge of mobile security best practices",
-        "Experience with app store optimization"
-      ]
+      niceToHave: [
+        'Native iOS development (Swift)',
+        'Native Android development (Kotlin/Java)',
+        'Experience with mobile testing frameworks',
+        'Knowledge of mobile security best practices',
+        'Experience with app store optimization',
+      ],
     },
-    "benefits": [
-      "Competitive hourly rate",
-      "Flexible working arrangements",
-      "Opportunity for contract extension",
-      "Access to company training resources",
-      "Networking opportunities with industry professionals"
-    ]
+    benefits: [
+      'Competitive hourly rate',
+      'Flexible working arrangements',
+      'Opportunity for contract extension',
+      'Access to company training resources',
+      'Networking opportunities with industry professionals',
+    ],
   },
   {
-    "id": 6,
-    "title": "Backend Developer",
-    "company": "Oracle",
-    "location": "Heredia",
-    "workMode": "On-site",
-    "jobType": "Full-time",
-    "experience": "Mid-Senior level",
-    "technologies": ["Java", "Spring Boot", "PostgreSQL", "Redis", "Kafka"],
-    "postedDate": "4 days ago",
-    "description":
+    id: 6,
+    title: 'Backend Developer',
+    company: 'Oracle',
+    location: 'Heredia',
+    workMode: 'On-site',
+    jobType: 'Full-time',
+    experience: 'Mid-Senior level',
+    technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Redis', 'Kafka'],
+    postedDate: '4 days ago',
+    description:
       "Join Oracle's backend development team to build robust, scalable server-side applications. You'll work on enterprise-grade software that serves millions of users worldwide, using cutting-edge technologies and best practices.",
-    "responsibilities": [
-      "Design and develop RESTful APIs and microservices",
-      "Optimize database queries and improve system performance",
-      "Implement security measures and data protection protocols",
-      "Collaborate with frontend teams on API integration",
-      "Participate in code reviews and technical discussions"
+    responsibilities: [
+      'Design and develop RESTful APIs and microservices',
+      'Optimize database queries and improve system performance',
+      'Implement security measures and data protection protocols',
+      'Collaborate with frontend teams on API integration',
+      'Participate in code reviews and technical discussions',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Computer Science or related field",
-        "4+ years of Java development experience",
-        "Strong knowledge of Spring Framework",
-        "Experience with relational databases",
-        "Understanding of microservices architecture"
+        '4+ years of Java development experience',
+        'Strong knowledge of Spring Framework',
+        'Experience with relational databases',
+        'Understanding of microservices architecture',
       ],
-      "niceToHave": [
-        "Experience with Oracle databases",
-        "Knowledge of message queuing systems",
-        "Understanding of caching strategies",
-        "Experience with performance tuning",
-        "Knowledge of enterprise integration patterns"
-      ]
+      niceToHave: [
+        'Experience with Oracle databases',
+        'Knowledge of message queuing systems',
+        'Understanding of caching strategies',
+        'Experience with performance tuning',
+        'Knowledge of enterprise integration patterns',
+      ],
     },
-    "benefits": [
-      "Comprehensive benefits package",
-      "Stock purchase plan",
-      "Professional development opportunities",
-      "On-site gym and recreational facilities",
-      "Employee assistance programs"
-    ]
+    benefits: [
+      'Comprehensive benefits package',
+      'Stock purchase plan',
+      'Professional development opportunities',
+      'On-site gym and recreational facilities',
+      'Employee assistance programs',
+    ],
   },
   {
-    "id": 7,
-    "title": "QA Automation Engineer",
-    "company": "Varicent",
-    "location": "Remote",
-    "workMode": "Remote",
-    "jobType": "Full-time",
-    "experience": "Associate",
-    "technologies": ["Selenium", "Cypress", "Jest", "Python", "Jenkins"],
-    "postedDate": "6 days ago",
-    "description":
+    id: 7,
+    title: 'QA Automation Engineer',
+    company: 'Varicent',
+    location: 'Remote',
+    workMode: 'Remote',
+    jobType: 'Full-time',
+    experience: 'Associate',
+    technologies: ['Selenium', 'Cypress', 'Jest', 'Python', 'Jenkins'],
+    postedDate: '6 days ago',
+    description:
       "We're seeking a QA Automation Engineer to help ensure the quality of our software products. You'll design and implement automated testing frameworks that help us deliver reliable software to our customers.",
-    "responsibilities": [
-      "Design and implement automated test suites",
-      "Develop test automation frameworks and tools",
-      "Execute manual and automated testing procedures",
-      "Identify, document, and track software defects",
-      "Collaborate with development teams on testing strategies"
+    responsibilities: [
+      'Design and implement automated test suites',
+      'Develop test automation frameworks and tools',
+      'Execute manual and automated testing procedures',
+      'Identify, document, and track software defects',
+      'Collaborate with development teams on testing strategies',
     ],
-    "requirements": {
-      "mustHave": [
-        "2+ years of experience in software testing",
-        "Knowledge of test automation tools (Selenium, Cypress)",
-        "Understanding of software testing methodologies",
-        "Basic programming skills in Python or JavaScript",
-        "Experience with bug tracking systems"
+    requirements: {
+      mustHave: [
+        '2+ years of experience in software testing',
+        'Knowledge of test automation tools (Selenium, Cypress)',
+        'Understanding of software testing methodologies',
+        'Basic programming skills in Python or JavaScript',
+        'Experience with bug tracking systems',
       ],
-      "niceToHave": [
-        "ISTQB certification",
-        "Experience with performance testing tools",
-        "Knowledge of API testing",
-        "Understanding of CI/CD pipelines",
-        "Experience with mobile app testing"
-      ]
+      niceToHave: [
+        'ISTQB certification',
+        'Experience with performance testing tools',
+        'Knowledge of API testing',
+        'Understanding of CI/CD pipelines',
+        'Experience with mobile app testing',
+      ],
     },
-    "benefits": [
-      "Remote work flexibility",
-      "Health and dental insurance",
-      "Professional certification support",
-      "Flexible PTO policy",
-      "Home office setup allowance"
-    ]
+    benefits: [
+      'Remote work flexibility',
+      'Health and dental insurance',
+      'Professional certification support',
+      'Flexible PTO policy',
+      'Home office setup allowance',
+    ],
   },
   {
-    "id": 8,
-    "title": "Product Manager",
-    "company": "Amazon",
-    "location": "San José",
-    "workMode": "Hybrid",
-    "jobType": "Full-time",
-    "experience": "Mid-Senior level",
-    "technologies": ["Jira", "Confluence", "Analytics", "SQL", "Tableau"],
-    "postedDate": "2 weeks ago",
-    "description":
+    id: 8,
+    title: 'Product Manager',
+    company: 'Amazon',
+    location: 'San José',
+    workMode: 'Hybrid',
+    jobType: 'Full-time',
+    experience: 'Mid-Senior level',
+    technologies: ['Jira', 'Confluence', 'Analytics', 'SQL', 'Tableau'],
+    postedDate: '2 weeks ago',
+    description:
       "Lead product development initiatives for one of Amazon's key product lines. You'll work with cross-functional teams to define product strategy, prioritize features, and drive execution from concept to launch.",
-    "responsibilities": [
-      "Define product roadmap and strategy",
-      "Gather and prioritize product requirements",
-      "Work closely with engineering and design teams",
-      "Analyze product metrics and user feedback",
-      "Coordinate product launches and go-to-market strategies"
+    responsibilities: [
+      'Define product roadmap and strategy',
+      'Gather and prioritize product requirements',
+      'Work closely with engineering and design teams',
+      'Analyze product metrics and user feedback',
+      'Coordinate product launches and go-to-market strategies',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Business, Engineering, or related field",
-        "3+ years of product management experience",
-        "Strong analytical and problem-solving skills",
-        "Experience with agile development methodologies",
-        "Excellent communication and leadership skills"
+        '3+ years of product management experience',
+        'Strong analytical and problem-solving skills',
+        'Experience with agile development methodologies',
+        'Excellent communication and leadership skills',
       ],
-      "niceToHave": [
-        "MBA or advanced degree",
-        "Experience in e-commerce or tech industry",
-        "Knowledge of data analysis tools",
-        "Experience with A/B testing",
-        "Technical background or engineering experience"
-      ]
+      niceToHave: [
+        'MBA or advanced degree',
+        'Experience in e-commerce or tech industry',
+        'Knowledge of data analysis tools',
+        'Experience with A/B testing',
+        'Technical background or engineering experience',
+      ],
     },
-    "benefits": [
-      "Competitive salary and stock options",
-      "Comprehensive health benefits",
-      "Parental leave programs",
-      "Career development programs",
-      "Employee discounts and perks"
-    ]
+    benefits: [
+      'Competitive salary and stock options',
+      'Comprehensive health benefits',
+      'Parental leave programs',
+      'Career development programs',
+      'Employee discounts and perks',
+    ],
   },
   {
-    "id": 9,
-    "title": "UI/UX Designer",
-    "company": "Microsoft",
-    "location": "Remote",
-    "workMode": "Remote",
-    "jobType": "Full-time",
-    "experience": "Associate",
-    "technologies": ["Figma", "Adobe Creative Suite", "Sketch", "InVision", "Principle"],
-    "postedDate": "1 week ago",
-    "description":
+    id: 9,
+    title: 'UI/UX Designer',
+    company: 'Microsoft',
+    location: 'Remote',
+    workMode: 'Remote',
+    jobType: 'Full-time',
+    experience: 'Associate',
+    technologies: [
+      'Figma',
+      'Adobe Creative Suite',
+      'Sketch',
+      'InVision',
+      'Principle',
+    ],
+    postedDate: '1 week ago',
+    description:
       "Join Microsoft's design team to create intuitive and beautiful user experiences. You'll work on products used by millions of people worldwide, collaborating with product managers and engineers to bring innovative designs to life.",
-    "responsibilities": [
-      "Create wireframes, prototypes, and high-fidelity designs",
-      "Conduct user research and usability testing",
-      "Collaborate with product and engineering teams",
-      "Maintain and evolve design systems",
-      "Present design concepts to stakeholders"
+    responsibilities: [
+      'Create wireframes, prototypes, and high-fidelity designs',
+      'Conduct user research and usability testing',
+      'Collaborate with product and engineering teams',
+      'Maintain and evolve design systems',
+      'Present design concepts to stakeholders',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Design, HCI, or related field",
-        "2+ years of UI/UX design experience",
-        "Proficiency in design tools (Figma, Sketch, Adobe Creative Suite)",
-        "Strong portfolio demonstrating design process",
-        "Understanding of user-centered design principles"
+        '2+ years of UI/UX design experience',
+        'Proficiency in design tools (Figma, Sketch, Adobe Creative Suite)',
+        'Strong portfolio demonstrating design process',
+        'Understanding of user-centered design principles',
       ],
-      "niceToHave": [
-        "Experience with design systems",
-        "Knowledge of front-end development (HTML, CSS)",
-        "Experience with user research methodologies",
-        "Understanding of accessibility guidelines",
-        "Experience designing for enterprise software"
-      ]
+      niceToHave: [
+        'Experience with design systems',
+        'Knowledge of front-end development (HTML, CSS)',
+        'Experience with user research methodologies',
+        'Understanding of accessibility guidelines',
+        'Experience designing for enterprise software',
+      ],
     },
-    "benefits": [
-      "Competitive compensation and equity",
-      "Comprehensive health and wellness benefits",
-      "Flexible work arrangements",
-      "Learning and development opportunities",
-      "Employee resource groups and communities"
-    ]
+    benefits: [
+      'Competitive compensation and equity',
+      'Comprehensive health and wellness benefits',
+      'Flexible work arrangements',
+      'Learning and development opportunities',
+      'Employee resource groups and communities',
+    ],
   },
   {
-    "id": 10,
-    "title": "Cybersecurity Analyst",
-    "company": "Icorp",
-    "location": "Cartago",
-    "workMode": "On-site",
-    "jobType": "Full-time",
-    "experience": "Entry level",
-    "technologies": ["SIEM", "Wireshark", "Nessus", "Python", "Linux"],
-    "postedDate": "3 days ago",
-    "description":
+    id: 10,
+    title: 'Cybersecurity Analyst',
+    company: 'Icorp',
+    location: 'Cartago',
+    workMode: 'On-site',
+    jobType: 'Full-time',
+    experience: 'Entry level',
+    technologies: ['SIEM', 'Wireshark', 'Nessus', 'Python', 'Linux'],
+    postedDate: '3 days ago',
+    description:
       "Start your cybersecurity career with our growing security team. You'll help protect our organization's digital assets by monitoring security events, investigating incidents, and implementing security measures.",
-    "responsibilities": [
-      "Monitor security events and alerts using SIEM tools",
-      "Investigate potential security incidents",
-      "Perform vulnerability assessments and penetration testing",
-      "Develop and maintain security documentation",
-      "Assist in security awareness training programs"
+    responsibilities: [
+      'Monitor security events and alerts using SIEM tools',
+      'Investigate potential security incidents',
+      'Perform vulnerability assessments and penetration testing',
+      'Develop and maintain security documentation',
+      'Assist in security awareness training programs',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Cybersecurity, IT, or related field",
-        "Basic understanding of network security concepts",
-        "Knowledge of operating systems (Windows, Linux)",
-        "Understanding of common security threats and vulnerabilities",
-        "Strong analytical and problem-solving skills"
+        'Basic understanding of network security concepts',
+        'Knowledge of operating systems (Windows, Linux)',
+        'Understanding of common security threats and vulnerabilities',
+        'Strong analytical and problem-solving skills',
       ],
-      "niceToHave": [
-        "Security certifications (Security+, CEH, CISSP)",
-        "Experience with security tools and technologies",
-        "Knowledge of scripting languages",
-        "Understanding of compliance frameworks",
-        "Experience with incident response procedures"
-      ]
+      niceToHave: [
+        'Security certifications (Security+, CEH, CISSP)',
+        'Experience with security tools and technologies',
+        'Knowledge of scripting languages',
+        'Understanding of compliance frameworks',
+        'Experience with incident response procedures',
+      ],
     },
-    "benefits": [
-      "Competitive entry-level salary",
-      "Comprehensive training program",
-      "Certification reimbursement",
-      "Health and life insurance",
-      "Career advancement opportunities"
-    ]
+    benefits: [
+      'Competitive entry-level salary',
+      'Comprehensive training program',
+      'Certification reimbursement',
+      'Health and life insurance',
+      'Career advancement opportunities',
+    ],
   },
   {
-    "id": 11,
-    "title": "Cybersecurity Analyst",
-    "company": "Icorp",
-    "location": "Cartago",
-    "workMode": "On-site",
-    "jobType": "Full-time",
-    "experience": "Entry level",
-    "technologies": ["SIEM", "Wireshark", "Nessus", "Python", "Linux"],
-    "postedDate": "3 days ago",
-    "description":
+    id: 11,
+    title: 'Cybersecurity Analyst',
+    company: 'Icorp',
+    location: 'Cartago',
+    workMode: 'On-site',
+    jobType: 'Full-time',
+    experience: 'Entry level',
+    technologies: ['SIEM', 'Wireshark', 'Nessus', 'Python', 'Linux'],
+    postedDate: '3 days ago',
+    description:
       "Start your cybersecurity career with our growing security team. You'll help protect our organization's digital assets by monitoring security events, investigating incidents, and implementing security measures.",
-    "responsibilities": [
-      "Monitor security events and alerts using SIEM tools",
-      "Investigate potential security incidents",
-      "Perform vulnerability assessments and penetration testing",
-      "Develop and maintain security documentation",
-      "Assist in security awareness training programs"
+    responsibilities: [
+      'Monitor security events and alerts using SIEM tools',
+      'Investigate potential security incidents',
+      'Perform vulnerability assessments and penetration testing',
+      'Develop and maintain security documentation',
+      'Assist in security awareness training programs',
     ],
-    "requirements": {
-      "mustHave": [
+    requirements: {
+      mustHave: [
         "Bachelor's degree in Cybersecurity, IT, or related field",
-        "Basic understanding of network security concepts",
-        "Knowledge of operating systems (Windows, Linux)",
-        "Understanding of common security threats and vulnerabilities",
-        "Strong analytical and problem-solving skills"
+        'Basic understanding of network security concepts',
+        'Knowledge of operating systems (Windows, Linux)',
+        'Understanding of common security threats and vulnerabilities',
+        'Strong analytical and problem-solving skills',
       ],
-      "niceToHave": [
-        "Security certifications (Security+, CEH, CISSP)",
-        "Experience with security tools and technologies",
-        "Knowledge of scripting languages",
-        "Understanding of compliance frameworks",
-        "Experience with incident response procedures"
-      ]
+      niceToHave: [
+        'Security certifications (Security+, CEH, CISSP)',
+        'Experience with security tools and technologies',
+        'Knowledge of scripting languages',
+        'Understanding of compliance frameworks',
+        'Experience with incident response procedures',
+      ],
     },
-    "benefits": [
-      "Competitive entry-level salary",
-      "Comprehensive training program",
-      "Certification reimbursement",
-      "Health and life insurance",
-      "Career advancement opportunities"
-    ]
-  }
+    benefits: [
+      'Competitive entry-level salary',
+      'Comprehensive training program',
+      'Certification reimbursement',
+      'Health and life insurance',
+      'Career advancement opportunities',
+    ],
+  },
 ]

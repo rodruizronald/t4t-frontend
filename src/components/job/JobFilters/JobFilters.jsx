@@ -12,7 +12,7 @@ export default function JobFilters({
 
   return (
     <>
-      {Object.keys(filterOptions).map((filter) => (
+      {Object.keys(filterOptions).map(filter => (
         <FilterMenuContainer
           key={filter}
           filter={filter}

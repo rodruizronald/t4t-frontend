@@ -1,12 +1,7 @@
 import { Menu, Box, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
-export default function FilterMenu({
-  anchorEl,
-  open,
-  onClose,
-  children,
-}) {
+export default function FilterMenu({ anchorEl, open, onClose, children }) {
   return (
     <Menu
       anchorEl={anchorEl}

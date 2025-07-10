@@ -49,7 +49,7 @@ export default function JobListItem({
 
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography
-              variant="h6"
+              variant='h6'
               sx={{
                 fontWeight: 600,
                 fontSize: '1.1rem',
@@ -63,7 +63,7 @@ export default function JobListItem({
             </Typography>
 
             <Typography
-              variant="body1"
+              variant='body1'
               sx={{
                 fontWeight: 500,
                 color: '#333',
@@ -80,7 +80,7 @@ export default function JobListItem({
                 alignItems: 'center',
               }}
             >
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant='caption' color='text.secondary'>
                 {postedDate || 'Recently posted'}
               </Typography>
             </Box>

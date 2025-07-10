@@ -21,7 +21,7 @@ export default function Header({
 }) {
   return (
     <AppBar
-      position="sticky"
+      position='sticky'
       sx={{
         bgcolor: '#ffffff',
         color: '#000000',
@@ -44,7 +44,7 @@ export default function Header({
             sx={{ mb: 2.5 }}
           >
             <Button
-              variant="contained"
+              variant='contained'
               sx={{
                 bgcolor: '#0a66c2',
                 minWidth: 80,
@@ -60,10 +60,10 @@ export default function Header({
 
             <TextField
               value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && onSearch()}
-              placeholder="Job title or skill"
-              size="small"
+              onChange={e => onSearchChange(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && onSearch()}
+              placeholder='Job title or skill'
+              size='small'
               sx={{
                 maxWidth: { xs: '100%', sm: 200 },
                 '& .MuiOutlinedInput-root': {
@@ -76,7 +76,7 @@ export default function Header({
               slotProps={{
                 input: {
                   startAdornment: (
-                    <InputAdornment position="start">
+                    <InputAdornment position='start'>
                       <SearchIcon sx={{ color: '#666' }} />
                     </InputAdornment>
                   ),
@@ -85,7 +85,7 @@ export default function Header({
             />
 
             <Button
-              variant="contained"
+              variant='contained'
               onClick={onSearch}
               sx={{
                 bgcolor: '#0a66c2',
@@ -102,8 +102,8 @@ export default function Header({
           </Stack>
 
           {/* Filters Row */}
-          <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ gap: 1 }}>
-            {Object.keys(filterOptions).map((filter) => (
+          <Stack direction='row' spacing={1} flexWrap='wrap' sx={{ gap: 1 }}>
+            {Object.keys(filterOptions).map(filter => (
               <FilterChip
                 key={filter}
                 filter={filter}

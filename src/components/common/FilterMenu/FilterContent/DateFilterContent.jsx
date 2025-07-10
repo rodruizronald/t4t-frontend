@@ -3,7 +3,7 @@ import { RadioGroup, FormControlLabel, Radio } from '@mui/material'
 export default function DateFilterContent({ options, value, onChange }) {
   return (
     <RadioGroup value={value} onChange={onChange}>
-      {options.map((option) => (
+      {options.map(option => (
         <FormControlLabel
           key={option.value}
           value={option.value}

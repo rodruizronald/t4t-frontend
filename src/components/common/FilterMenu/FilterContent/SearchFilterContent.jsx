@@ -8,7 +8,7 @@ export default function SearchFilterContent({
   onSearchChange,
   searchPlaceholder = 'Search...',
 }) {
-  const handleCheckboxChange = (value) => {
+  const handleCheckboxChange = value => {
     onChange(value)
   }
 
@@ -17,10 +17,10 @@ export default function SearchFilterContent({
       <Box sx={{ pr: 4 }}>
         <TextField
           fullWidth
-          size="small"
+          size='small'
           placeholder={searchPlaceholder}
           value={searchValue}
-          onChange={(e) => onSearchChange(e.target.value)}
+          onChange={e => onSearchChange(e.target.value)}
           sx={{
             mb: 1,
             px: 1.5,
@@ -34,7 +34,7 @@ export default function SearchFilterContent({
         />
       </Box>
 
-      {options.map((option) => (
+      {options.map(option => (
         <FormControlLabel
           key={option}
           control={

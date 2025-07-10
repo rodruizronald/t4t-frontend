@@ -5,12 +5,12 @@ export default function FilterChip({ filter, isActive, activeCount, onClick }) {
   return (
     <Badge
       badgeContent={activeCount}
-      color="primary"
+      color='primary'
       invisible={activeCount === 0}
     >
       <Chip
         label={filter.charAt(0).toUpperCase() + filter.slice(1)}
-        onDelete={(e) => onClick(filter, e)}
+        onDelete={e => onClick(filter, e)}
         deleteIcon={<ExpandMoreIcon />}
         sx={{
           bgcolor: isActive ? '#0a66c2' : '#ffffff',

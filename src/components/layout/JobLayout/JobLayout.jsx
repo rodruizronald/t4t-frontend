@@ -41,14 +41,14 @@ export default function JobLayout() {
     console.log('Searching for:', searchQuery)
   }
 
-  const handleJobSelect = (job) => {
+  const handleJobSelect = job => {
     setSelectedJobId(job.id)
     console.log('Selected job:', job)
   }
 
   const selectedJob =
-    currentPageJobs.find((job) => job.id === selectedJobId) ||
-    allJobs.find((job) => job.id === selectedJobId)
+    currentPageJobs.find(job => job.id === selectedJobId) ||
+    allJobs.find(job => job.id === selectedJobId)
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
