@@ -12,15 +12,9 @@ export default function FilterMenuContainer({
   filterOptions,
   activeFilters,
   onFilterChange,
-  onApplyFilters,
-  resultsCount,
   companySearchInput,
   onCompanySearchChange,
 }) {
-  const handleApplyFilters = () => {
-    onApplyFilters(filter)
-  }
-
   const renderFilterContent = () => {
     switch (filter) {
       case 'date':
@@ -65,8 +59,6 @@ export default function FilterMenuContainer({
       anchorEl={anchorEl}
       open={open}
       onClose={onClose}
-      onApplyFilters={handleApplyFilters}
-      resultsCount={resultsCount}
     >
       {renderFilterContent()}
     </FilterMenu>

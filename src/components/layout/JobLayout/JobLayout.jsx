@@ -23,7 +23,6 @@ export default function JobLayout() {
     handleFilterClick,
     handleMenuClose,
     handleFilterChange,
-    handleApplyFilters,
     getActiveFilterCount,
   } = useJobFilters()
 
@@ -68,8 +67,6 @@ export default function JobLayout() {
         onFilterChange={handleFilterChange}
         anchorEls={anchorEls}
         onMenuClose={handleMenuClose}
-        onApplyFilters={handleApplyFilters}
-        resultsCount={totalJobs}
       />
 
       {/* Main Content Container - Fixed Height */}

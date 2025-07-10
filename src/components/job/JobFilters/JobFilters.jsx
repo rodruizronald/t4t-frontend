@@ -7,8 +7,6 @@ export default function JobFilters({
   onFilterChange,
   anchorEls,
   onMenuClose,
-  onApplyFilters,
-  resultsCount,
 }) {
   const [companySearchInput, setCompanySearchInput] = useState('')
 
@@ -24,8 +22,6 @@ export default function JobFilters({
           filterOptions={filterOptions}
           activeFilters={activeFilters}
           onFilterChange={onFilterChange}
-          onApplyFilters={onApplyFilters}
-          resultsCount={resultsCount}
           companySearchInput={companySearchInput}
           onCompanySearchChange={setCompanySearchInput}
         />

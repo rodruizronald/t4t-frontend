@@ -1,12 +1,10 @@
-import { Menu, Box, IconButton, Divider, Button } from '@mui/material'
+import { Menu, Box, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
 export default function FilterMenu({
   anchorEl,
   open,
   onClose,
-  onApplyFilters,
-  resultsCount,
   children,
 }) {
   return (
@@ -46,49 +44,7 @@ export default function FilterMenu({
         </Box>
 
         {/* Content Area - Dynamic Content */}
-        <Box sx={{ maxHeight: 300, overflow: 'auto', mb: 2 }}>{children}</Box>
-
-        {/* Footer - Action Buttons */}
-        <Divider sx={{ mx: -2.5 }} />
-
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 1.5,
-            justifyContent: 'flex-end',
-            mt: 2,
-          }}
-        >
-          <Button
-            onClick={onClose}
-            sx={{
-              color: '#313131',
-              textTransform: 'none',
-              borderRadius: '24px',
-              px: 2,
-              fontWeight: 'bold',
-              fontSize: 'body1.fontSize',
-              '&:hover': { bgcolor: '#f3f2ef' },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            onClick={onApplyFilters}
-            sx={{
-              bgcolor: '#0a66c2',
-              textTransform: 'none',
-              borderRadius: '24px',
-              px: 2,
-              fontWeight: 'bold',
-              fontSize: 'body1.fontSize',
-              '&:hover': { bgcolor: '#004182' },
-            }}
-          >
-            Show {resultsCount} results
-          </Button>
-        </Box>
+        <Box sx={{ maxHeight: 300, overflow: 'auto', mb: 1 }}>{children}</Box>
       </Box>
     </Menu>
   )

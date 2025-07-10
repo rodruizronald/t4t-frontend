@@ -33,11 +33,6 @@ export function useJobFilters() {
     }
   }
 
-  const handleApplyFilters = (filter) => {
-    handleMenuClose(filter)
-    console.log('Applied filters:', activeFilters)
-  }
-
   const getActiveFilterCount = (filter) => {
     if (filter === FILTER_TYPES.DATE) return activeFilters.date !== DATE_VALUES.ANY ? 1 : 0
     return activeFilters[filter].length
@@ -52,7 +47,6 @@ export function useJobFilters() {
     handleFilterClick,
     handleMenuClose,
     handleFilterChange,
-    handleApplyFilters,
     getActiveFilterCount,
   }
 }
