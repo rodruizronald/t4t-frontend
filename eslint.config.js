@@ -23,7 +23,19 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Enhanced unused vars rule with better patterns
+      'no-unused-vars': ['error', { 
+        varsIgnorePattern: '^[A-Z_]',
+        argsIgnorePattern: '^_',
+        ignoreRestSiblings: true
+      }],
+      // Additional rules to catch unused/dead code
+      'no-unreachable': 'error',
+      'no-unused-expressions': 'error',
+      'no-unused-labels': 'error',
+      'no-useless-return': 'error',
+      'no-useless-concat': 'error',
+      'no-useless-escape': 'error',
     },
   },
 ])
