@@ -24,11 +24,14 @@ export default defineConfig([
     },
     rules: {
       // Enhanced unused vars rule with better patterns
-      'no-unused-vars': ['error', { 
-        varsIgnorePattern: '^[A-Z_]',
-        argsIgnorePattern: '^_',
-        ignoreRestSiblings: true
-      }],
+      'no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^[A-Z_]',
+          argsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
       // Additional rules to catch unused/dead code
       'no-unreachable': 'error',
       'no-unused-expressions': 'error',
