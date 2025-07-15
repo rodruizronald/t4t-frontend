@@ -24,6 +24,12 @@ import {
   transformJobs,
   transformSearchResponse,
 } from '../../../utils/transformers/jobTransformer'
+import {
+  getDateRange,
+  getDateRangeDescription,
+  isDateFilterActive,
+} from '../../../utils/dateUtils'
+import { DATE_VALUES } from '../../../constants/job/filterOptions'
 
 export default function JobLayout() {
   const filterOptions = useFilterOptions()
@@ -146,6 +152,26 @@ export default function JobLayout() {
     'Transformed Search Response:',
     transformSearchResponse(mockApiResponse)
   )
+
+  // TEMPORARY: Test date range converter
+  console.log('=== Step 4 Validation ===')
+
+  // Test all date filter options
+  Object.values(DATE_VALUES).forEach(dateValue => {
+    const dateRange = getDateRange(dateValue)
+    const description = getDateRangeDescription(dateValue)
+    const isActive = isDateFilterActive(dateValue)
+
+    console.log(`Date Filter: ${dateValue}`)
+    console.log(`  Range: ${dateRange.date_from} to ${dateRange.date_to}`)
+    console.log(`  Description: ${description}`)
+    console.log(`  Is Active: ${isActive}`)
+    console.log('---')
+  })
+
+  // Test with current active date filter
+  console.log('Current Active Date Filter:', activeFilters.date)
+  console.log('Current Date Range:', getDateRange(activeFilters.date))
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
