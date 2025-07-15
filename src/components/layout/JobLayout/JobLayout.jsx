@@ -8,6 +8,12 @@ import { mockJobs } from '../../../mocks/mockJobs'
 import { useFilterOptions } from '../../../hooks/job'
 import { useJobPagination } from '../../../hooks/job/useJobPagination'
 import { useJobFilters } from '../../../hooks/job/useJobFilters'
+import {
+  getApiBaseUrl,
+  getEnvironmentMode,
+  isDevelopment,
+} from '../../../services/api/config'
+import { jobService } from '../../../services/api/jobService'
 
 export default function JobLayout() {
   const filterOptions = useFilterOptions()
@@ -49,6 +55,16 @@ export default function JobLayout() {
   const selectedJob =
     currentPageJobs.find(job => job.id === selectedJobId) ||
     allJobs.find(job => job.id === selectedJobId)
+
+  // TEMPORARY: Test environment configuration
+  console.log('=== Step 1 Validation ===')
+  console.log('API Base URL:', getApiBaseUrl())
+  console.log('Environment Mode:', getEnvironmentMode())
+  console.log('Is Development:', isDevelopment())
+  console.log('JobService Base URL:', jobService.baseUrl)
+
+  // Test the service method
+  jobService.searchJobs('test query', {}, { page: 1 })
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
