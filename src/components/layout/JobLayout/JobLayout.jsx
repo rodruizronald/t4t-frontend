@@ -8,11 +8,18 @@ import { mockJobs } from '../../../mocks/mockJobs'
 import { useFilterOptions } from '../../../hooks/job'
 import { useJobPagination } from '../../../hooks/job/useJobPagination'
 import { useJobFilters } from '../../../hooks/job/useJobFilters'
-import { jobService } from '../../../services/api/jobService'
+import { useJobSearch } from '../../../hooks/job/useJobSearch'
 
 export default function JobLayout() {
   const filterOptions = useFilterOptions()
   const [searchQuery, setSearchQuery] = useState('support engineer')
+
+  // Add the job search hook
+  const {
+    jobs: apiJobs,
+    pagination: apiPagination,
+    searchJobs,
+  } = useJobSearch()
 
   // Replace the inline mock data with imported data
   const [allJobs] = useState(mockJobs)
@@ -38,8 +45,17 @@ export default function JobLayout() {
     handlePageChange,
   } = useJobPagination(allJobs, searchQuery, activeFilters)
 
-  const handleSearch = () => {
-    console.log('Searching for:', searchQuery)
+  const handleSearch = async () => {
+    console.log('🔍 User triggered search for:', searchQuery)
+    try {
+      await searchJobs(searchQuery, activeFilters, {
+        page: currentPage,
+        pageSize: 20,
+      })
+      console.log('✅ Search completed successfully')
+    } catch (error) {
+      console.log('❌ Search failed - continuing with mock data', error)
+    }
   }
 
   const handleJobSelect = job => {
@@ -51,21 +67,11 @@ export default function JobLayout() {
     currentPageJobs.find(job => job.id === selectedJobId) ||
     allJobs.find(job => job.id === selectedJobId)
 
-  // TEMPORARY: Test API calls
-  console.log('=== Step 6 Validation ===')
-
-  // Test search API call with current state
-  const testApiCall = async () => {
-    console.log('Testing API call with current state...')
-    const result = await jobService.searchJobs(searchQuery, activeFilters, {
-      page: currentPage,
-      pageSize: 20,
-    })
-    console.log('API Search Result:', result)
-  }
-
-  // Call the test function
-  testApiCall()
+  // TEMPORARY: Test API functionality
+  console.log('=== API Integration Status ===')
+  console.log('API Jobs Available:', apiJobs.length)
+  console.log('API Pagination:', apiPagination)
+  console.log('Using Mock Data:', allJobs.length)
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>

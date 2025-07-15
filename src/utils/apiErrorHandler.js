@@ -1,65 +1,96 @@
 /**
- * Handle API errors and provide user-friendly messages
+ * Error types for better categorization
  */
-
-export const API_ERROR_TYPES = {
-  NETWORK_ERROR: 'NETWORK_ERROR',
-  SERVER_ERROR: 'SERVER_ERROR',
-  NOT_FOUND: 'NOT_FOUND',
-  UNAUTHORIZED: 'UNAUTHORIZED',
-  VALIDATION_ERROR: 'VALIDATION_ERROR',
-  UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+export const ERROR_TYPES = {
+  NETWORK: 'NETWORK_ERROR',
+  TIMEOUT: 'TIMEOUT_ERROR',
+  SERVER: 'SERVER_ERROR',
+  NOT_FOUND: 'NOT_FOUND_ERROR',
+  VALIDATION: 'VALIDATION_ERROR',
+  UNKNOWN: 'UNKNOWN_ERROR',
 }
 
 /**
- * Determine error type from response or error object
- * @param {Error|Response} error - Error object or response
+ * Determine error type from error object
+ * @param {Error} error - The error object
  * @returns {string} Error type constant
  */
-export const getErrorType = error => {
-  if (!navigator.onLine) {
-    return API_ERROR_TYPES.NETWORK_ERROR
-  }
+export function getErrorType(error) {
+  if (!error) return ERROR_TYPES.UNKNOWN
 
-  if (error.status) {
-    if (error.status === 404) return API_ERROR_TYPES.NOT_FOUND
-    if (error.status === 401 || error.status === 403)
-      return API_ERROR_TYPES.UNAUTHORIZED
-    if (error.status >= 400 && error.status < 500)
-      return API_ERROR_TYPES.VALIDATION_ERROR
-    if (error.status >= 500) return API_ERROR_TYPES.SERVER_ERROR
-  }
-
+  // Network/Connection errors
   if (error.name === 'TypeError' && error.message.includes('fetch')) {
-    return API_ERROR_TYPES.NETWORK_ERROR
+    return ERROR_TYPES.NETWORK
   }
 
-  return API_ERROR_TYPES.UNKNOWN_ERROR
+  if (error.name === 'AbortError' || error.message.includes('timeout')) {
+    return ERROR_TYPES.TIMEOUT
+  }
+
+  // HTTP status errors
+  if (error.message.includes('404')) {
+    return ERROR_TYPES.NOT_FOUND
+  }
+
+  if (error.message.includes('400') || error.message.includes('422')) {
+    return ERROR_TYPES.VALIDATION
+  }
+
+  if (
+    error.message.includes('500') ||
+    error.message.includes('502') ||
+    error.message.includes('503')
+  ) {
+    return ERROR_TYPES.SERVER
+  }
+
+  return ERROR_TYPES.UNKNOWN
 }
 
 /**
- * Get user-friendly error message
- * @param {string} errorType - Error type constant
- * @returns {string} User-friendly error message
+ * Get user-friendly error message for console logging
+ * @param {string} errorType - Error type from getErrorType()
+ * @param {Error} originalError - Original error object
+ * @returns {string} Formatted error message
  */
-export const getErrorMessage = errorType => {
-  switch (errorType) {
-    case API_ERROR_TYPES.NETWORK_ERROR:
-      return 'Unable to connect to the server. Please check your internet connection.'
-
-    case API_ERROR_TYPES.SERVER_ERROR:
-      return 'Server is temporarily unavailable. Please try again later.'
-
-    case API_ERROR_TYPES.NOT_FOUND:
-      return 'The requested resource was not found.'
-
-    case API_ERROR_TYPES.UNAUTHORIZED:
-      return 'You are not authorized to access this resource.'
-
-    case API_ERROR_TYPES.VALIDATION_ERROR:
-      return 'Invalid request. Please check your search parameters.'
-
-    default:
-      return 'An unexpected error occurred. Please try again.'
+export function getErrorMessage(errorType, originalError = null) {
+  const baseMessages = {
+    [ERROR_TYPES.NETWORK]:
+      'Network connection failed - check internet connection',
+    [ERROR_TYPES.TIMEOUT]: 'Request timed out - server may be slow',
+    [ERROR_TYPES.SERVER]: 'Server error - try again later',
+    [ERROR_TYPES.NOT_FOUND]: 'API endpoint not found - check configuration',
+    [ERROR_TYPES.VALIDATION]: 'Invalid request parameters',
+    [ERROR_TYPES.UNKNOWN]: 'An unexpected error occurred',
   }
+
+  let message = baseMessages[errorType] || baseMessages[ERROR_TYPES.UNKNOWN]
+
+  if (originalError?.message) {
+    message += ` (${originalError.message})`
+  }
+
+  return message
+}
+
+/**
+ * Enhanced console error logging with context
+ * @param {string} context - Where the error occurred (e.g., 'Job Search API')
+ * @param {Error} error - The error object
+ * @param {Object} additionalData - Extra context data
+ */
+export function logApiError(context, error, additionalData = {}) {
+  const errorType = getErrorType(error)
+  const errorMessage = getErrorMessage(errorType, error)
+
+  console.group(`🚨 API Error: ${context}`)
+  console.error('Error Type:', errorType)
+  console.error('Message:', errorMessage)
+  console.error('Original Error:', error)
+
+  if (Object.keys(additionalData).length > 0) {
+    console.error('Additional Context:', additionalData)
+  }
+
+  console.groupEnd()
 }
