@@ -19,6 +19,11 @@ import {
   MODE_OPTIONS,
   TYPE_OPTIONS,
 } from '../../../constants/job/filterOptions'
+import {
+  transformJob,
+  transformJobs,
+  transformSearchResponse,
+} from '../../../utils/transformers/jobTransformer'
 
 export default function JobLayout() {
   const filterOptions = useFilterOptions()
@@ -90,6 +95,57 @@ export default function JobLayout() {
 
   // Test the service method
   jobService.searchJobs('test query', {}, { page: 1 })
+
+  // TEMPORARY: Test data transformer
+  console.log('=== Step 3 Validation ===')
+
+  // Mock API response to test transformer
+  const mockApiJob = {
+    job_id: 1,
+    company_id: 123,
+    company_name: 'Tech Corp',
+    company_logo_url: 'https://example.com/logo.png',
+    title: 'Senior Golang Developer',
+    description: 'We are looking for an experienced Golang developer...',
+    responsibilities: [
+      'Develop and maintain backend services',
+      'Write clean, efficient code',
+    ],
+    requirements: {
+      must_have: ['3+ years of Go experience', 'Experience with microservices'],
+      nice_to_have: ['Kubernetes knowledge', 'AWS experience'],
+    },
+    benefits: ['Health insurance', 'Remote work flexibility'],
+    experience_level: 'senior',
+    employment_type: 'full-time',
+    location: 'costarica',
+    work_mode: 'remote',
+    application_url: 'https://company.com/apply/123',
+    technologies: [
+      { name: 'Go', category: 'Programming Language', required: true },
+      { name: 'PostgreSQL', category: 'Database', required: false },
+    ],
+    posted_at: '2024-01-15T10:30:00Z',
+  }
+
+  const mockApiResponse = {
+    data: [mockApiJob],
+    pagination: {
+      total: 150,
+      limit: 20,
+      offset: 0,
+      has_more: true,
+    },
+  }
+
+  // Test transformations
+  console.log('Original API Job:', mockApiJob)
+  console.log('Transformed Job:', transformJob(mockApiJob))
+  console.log('Transformed Jobs Array:', transformJobs([mockApiJob]))
+  console.log(
+    'Transformed Search Response:',
+    transformSearchResponse(mockApiResponse)
+  )
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
