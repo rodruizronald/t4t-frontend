@@ -14,6 +14,11 @@ import {
   isDevelopment,
 } from '../../../services/api/config'
 import { jobService } from '../../../services/api/jobService'
+import {
+  EXPERIENCE_OPTIONS,
+  MODE_OPTIONS,
+  TYPE_OPTIONS,
+} from '../../../constants/job/filterOptions'
 
 export default function JobLayout() {
   const filterOptions = useFilterOptions()
@@ -62,6 +67,26 @@ export default function JobLayout() {
   console.log('Environment Mode:', getEnvironmentMode())
   console.log('Is Development:', isDevelopment())
   console.log('JobService Base URL:', jobService.baseUrl)
+
+  // TEMPORARY: Test filter constants
+  console.log('=== Step 2 Validation ===')
+  console.log('Experience Options:', EXPERIENCE_OPTIONS)
+  console.log('Mode Options:', MODE_OPTIONS)
+  console.log('Type Options:', TYPE_OPTIONS)
+
+  // Test the transformation that CheckboxFilterContent does
+  console.log(
+    'Experience API values:',
+    EXPERIENCE_OPTIONS.map(option => option.toLowerCase().replace(/\s+/g, '-'))
+  )
+  console.log(
+    'Mode API values:',
+    MODE_OPTIONS.map(option => option.toLowerCase().replace(/\s+/g, '-'))
+  )
+  console.log(
+    'Type API values:',
+    TYPE_OPTIONS.map(option => option.toLowerCase().replace(/\s+/g, '-'))
+  )
 
   // Test the service method
   jobService.searchJobs('test query', {}, { page: 1 })
