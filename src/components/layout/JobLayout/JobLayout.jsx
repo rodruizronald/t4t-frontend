@@ -4,25 +4,38 @@ import { useState } from 'react'
 import JobFilters from '../../job/JobFilters'
 import JobList from '../../job/JobList'
 import JobDetails from '../../job/JobDetails'
-import { mockJobs } from '../../../mocks/mockJobs'
 import { useFilterOptions } from '../../../hooks/job'
-import { useJobPagination } from '../../../hooks/job/useJobPagination'
+import { useServerPagination } from '../../../hooks/job/useServerPagination'
 import { useJobFilters } from '../../../hooks/job/useJobFilters'
 import { useJobSearch } from '../../../hooks/job/useJobSearch'
+import { PAGINATION } from '../../../constants/job'
+
+// Extract the URL reset logic to a separate function
+const resetToPageOne = setSearchParams => {
+  const newSearchParams = new URLSearchParams(window.location.search)
+  newSearchParams.delete('p')
+
+  window.history.replaceState(
+    {},
+    '',
+    newSearchParams.toString()
+      ? `${window.location.pathname}?${newSearchParams}`
+      : window.location.pathname
+  )
+
+  setSearchParams(newSearchParams)
+}
 
 export default function JobLayout() {
   const filterOptions = useFilterOptions()
-  const [searchQuery, setSearchQuery] = useState('support engineer')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  // Add the job search hook
+  // Use API job search hook
   const {
     jobs: apiJobs,
     pagination: apiPagination,
     searchJobs,
   } = useJobSearch()
-
-  // Replace the inline mock data with imported data
-  const [allJobs] = useState(mockJobs)
 
   // Use job filters hook
   const {
@@ -34,44 +47,47 @@ export default function JobLayout() {
     getActiveFilterCount,
   } = useJobFilters()
 
-  // Use pagination hook
+  // Use server-side pagination hook
   const {
     currentPage,
     totalPages,
     totalJobs,
     currentPageJobs,
+    selectedJob,
     selectedJobId,
     setSelectedJobId,
     handlePageChange,
-  } = useJobPagination(allJobs, searchQuery, activeFilters)
+    setSearchParams,
+  } = useServerPagination(
+    apiJobs,
+    apiPagination,
+    searchJobs,
+    searchQuery,
+    activeFilters
+  )
 
   const handleSearch = async () => {
-    console.log('🔍 User triggered search for:', searchQuery)
+    // Reset to page 1 and clear selected job
+    resetToPageOne(setSearchParams)
+
     try {
       await searchJobs(searchQuery, activeFilters, {
-        page: currentPage,
-        pageSize: 20,
+        page: PAGINATION.DEFAULT_PAGE, // Always start from page 1 for new searches
+        pageSize: PAGINATION.PAGE_SIZE,
       })
-      console.log('✅ Search completed successfully')
+
+      // Only clear selection after successful API call
+      setSelectedJobId(null)
+
+      console.log('Search completed successfully')
     } catch (error) {
-      console.log('❌ Search failed - continuing with mock data', error)
+      console.log('Search failed:', error)
     }
   }
 
   const handleJobSelect = job => {
     setSelectedJobId(job.id)
-    console.log('Selected job:', job)
   }
-
-  const selectedJob =
-    currentPageJobs.find(job => job.id === selectedJobId) ||
-    allJobs.find(job => job.id === selectedJobId)
-
-  // TEMPORARY: Test API functionality
-  console.log('=== API Integration Status ===')
-  console.log('API Jobs Available:', apiJobs.length)
-  console.log('API Pagination:', apiPagination)
-  console.log('Using Mock Data:', allJobs.length)
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>

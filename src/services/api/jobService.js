@@ -23,13 +23,6 @@ class JobService {
       const apiParams = buildApiParams(searchQuery, filters, pagination)
       const apiUrl = buildApiUrl(this.baseUrl, '/jobs', apiParams)
 
-      console.log('=== API Call Details ===')
-      console.log('Search Query:', searchQuery)
-      console.log('Filters:', filters)
-      console.log('Pagination:', pagination)
-      console.log('API Params:', apiParams)
-      console.log('API URL:', apiUrl)
-
       // Make the API call
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -38,11 +31,6 @@ class JobService {
           Accept: 'application/json',
         },
       })
-
-      console.log('=== API Response ===')
-      console.log('Status:', response.status)
-      console.log('Status Text:', response.statusText)
-      console.log('Headers:', Object.fromEntries(response.headers.entries()))
 
       if (!response.ok) {
         throw new Error(
@@ -60,13 +48,6 @@ class JobService {
 
       return transformedData
     } catch (error) {
-      console.error('=== API Error ===')
-      console.error('Error Type:', error.name)
-      console.error('Error Message:', error.message)
-      console.error('Full Error:', error)
-
-      // Return mock structure for development
-      console.log('Returning mock data due to API error')
       return {
         jobs: [],
         pagination: {

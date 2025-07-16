@@ -25,11 +25,11 @@ export function useJobSearch() {
       // Prevent duplicate requests
       const currentParams = JSON.stringify({ searchQuery, filters, pagination })
       if (currentParams === searchState.lastSearchParams) {
-        console.log('🔄 Skipping duplicate search request')
+        console.log('Skipping duplicate search request')
         return searchState
       }
 
-      console.log('🔍 Starting job search API call...', {
+      console.log('Starting job search API call...', {
         searchQuery,
         filters,
         pagination,
@@ -43,7 +43,7 @@ export function useJobSearch() {
           pagination
         )
 
-        console.log('✅ Job search API successful:', {
+        console.log('Job search API successful:', {
           jobCount: result.jobs?.length || 0,
           pagination: result.pagination,
         })
@@ -86,7 +86,7 @@ export function useJobSearch() {
    * Clear search results and reset state
    */
   const clearSearch = useCallback(() => {
-    console.log('🧹 Clearing search results')
+    console.log('Clearing search results')
     setSearchState({
       jobs: [],
       pagination: null,
@@ -99,7 +99,7 @@ export function useJobSearch() {
    */
   const retrySearch = useCallback(async () => {
     if (searchState.lastSearchParams) {
-      console.log('🔄 Retrying last search...')
+      console.log('Retrying last search...')
       const params = JSON.parse(searchState.lastSearchParams)
 
       // Temporarily clear lastSearchParams to allow retry
@@ -111,7 +111,7 @@ export function useJobSearch() {
         params.pagination
       )
     } else {
-      console.warn('⚠️ No previous search to retry')
+      console.warn('No previous search to retry')
     }
   }, [searchState.lastSearchParams, searchJobs])
 
