@@ -1,14 +1,13 @@
 import Header from '../../common/Header'
 import { Box } from '@mui/material'
 import { useState } from 'react'
-import JobFilters from '../../job/JobFilters'
-import JobList from '../../job/JobList'
-import JobDetails from '../../job/JobDetails'
-import { useFilterOptions } from '../../../hooks/job'
-import { useServerPagination } from '../../../hooks/job/useServerPagination'
-import { useJobFilters } from '../../../hooks/job/useJobFilters'
-import { useJobSearch } from '../../../hooks/job/useJobSearch'
-import { PAGINATION } from '../../../constants/job'
+import { JobList, JobDetails, JobFilters } from '../../job'
+import {
+  useJobFilters,
+  useJobSearch,
+  useJobPagination,
+} from '../../../hooks/job'
+import { PAGINATION, FILTER_OPTIONS } from '../../../constants/job'
 
 // Extract the URL reset logic to a separate function
 const resetToPageOne = setSearchParams => {
@@ -27,7 +26,6 @@ const resetToPageOne = setSearchParams => {
 }
 
 export default function JobLayout() {
-  const filterOptions = useFilterOptions()
   const [searchQuery, setSearchQuery] = useState('')
 
   // Use API job search hook
@@ -58,7 +56,7 @@ export default function JobLayout() {
     setSelectedJobId,
     handlePageChange,
     setSearchParams,
-  } = useServerPagination(
+  } = useJobPagination(
     apiJobs,
     apiPagination,
     searchJobs,
@@ -95,13 +93,13 @@ export default function JobLayout() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSearch={handleSearch}
-        filterOptions={filterOptions}
+        filterOptions={FILTER_OPTIONS}
         anchorEls={anchorEls}
         onFilterClick={handleFilterClick}
         getActiveFilterCount={getActiveFilterCount}
       />
       <JobFilters
-        filterOptions={filterOptions}
+        filterOptions={FILTER_OPTIONS}
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         anchorEls={anchorEls}
