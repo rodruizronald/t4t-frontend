@@ -1,10 +1,12 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import JobLayout from './components/layout/JobLayout'
 
 function App() {
   return (
     <BrowserRouter>
-      <JobLayout />
+      <Routes>
+        <Route path='/jobs/search' element={<JobLayout />} />
+      </Routes>
     </BrowserRouter>
   )
 }

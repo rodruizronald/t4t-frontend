@@ -1,5 +1,4 @@
 import { Box, Typography, Stack, Avatar, Divider } from '@mui/material'
-import { LocationOn, Schedule, WorkOutline } from '@mui/icons-material'
 
 export default function JobListItem({
   job,

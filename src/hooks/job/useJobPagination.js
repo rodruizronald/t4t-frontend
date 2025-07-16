@@ -2,30 +2,33 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { PAGINATION } from '../../constants/job'
 
-export function useJobPagination(allJobs, searchQuery, activeFilters) {
+export function useJobPagination(
+  apiJobs,
+  apiPagination,
+  searchJobs,
+  searchQuery,
+  activeFilters
+) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedJobId, setSelectedJobId] = useState(null)
 
   // Get current page from URL, default to 1
   const currentPage = parseInt(searchParams.get('p')) || PAGINATION.DEFAULT_PAGE
 
-  // Calculate pagination values
-  const totalJobs = allJobs.length
-  const totalPages = Math.ceil(totalJobs / PAGINATION.PAGE_SIZE)
-  const startIndex = (currentPage - 1) * PAGINATION.PAGE_SIZE
-  const endIndex = startIndex + PAGINATION.PAGE_SIZE
+  // Calculate pagination values from API metadata
+  const totalJobs = apiPagination?.total || 0
+  const totalPages = apiPagination
+    ? Math.ceil(apiPagination.total / apiPagination.limit)
+    : PAGINATION.DEFAULT_PAGE
 
-  // Get jobs for current page
-  const currentPageJobs = useMemo(() => {
-    return allJobs.slice(startIndex, endIndex)
-  }, [allJobs, startIndex, endIndex])
+  // For server-side pagination, currentPageJobs = all apiJobs
+  const currentPageJobs = apiJobs
 
-  // Handle page change
-  const handlePageChange = newPage => {
+  // Handle page change - make new API call
+  const handlePageChange = async newPage => {
     const newSearchParams = new URLSearchParams(searchParams)
 
     if (newPage === PAGINATION.DEFAULT_PAGE) {
-      // Remove 'p' parameter for first page to keep URL clean
       newSearchParams.delete('p')
     } else {
       newSearchParams.set('p', newPage.toString())
@@ -33,63 +36,39 @@ export function useJobPagination(allJobs, searchQuery, activeFilters) {
 
     setSearchParams(newSearchParams)
 
-    // Auto-select first job of the new page
-    const newStartIndex = (newPage - 1) * PAGINATION.PAGE_SIZE
-    const newEndIndex = newStartIndex + PAGINATION.PAGE_SIZE
-    const newPageJobs = allJobs.slice(newStartIndex, newEndIndex)
-
-    if (newPageJobs.length > 0) {
-      setSelectedJobId(newPageJobs[0].id)
-    } else {
-      setSelectedJobId(null)
+    // Make API call for new page
+    try {
+      await searchJobs(searchQuery, activeFilters, {
+        page: newPage,
+        pageSize: PAGINATION.PAGE_SIZE,
+      })
+    } catch (error) {
+      console.error('Failed to fetch page:', error)
     }
-
-    // Scroll to top of job list
-    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // Reset to page 1 when search query or filters change
+  // Auto-select first job when jobs change and no job is selected
   useEffect(() => {
-    if (currentPage > PAGINATION.DEFAULT_PAGE) {
-      const newSearchParams = new URLSearchParams(searchParams)
-      newSearchParams.delete('p')
-      setSearchParams(newSearchParams)
+    if (apiJobs.length > 0) {
+      setSelectedJobId(apiJobs[0].id)
     }
-    setSelectedJobId(null)
-  }, [searchQuery, activeFilters]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [apiJobs])
 
-  // Validate current page (redirect to last page if current page is too high)
-  useEffect(() => {
-    if (currentPage > totalPages && totalPages > 0) {
-      const newSearchParams = new URLSearchParams(searchParams)
-      if (totalPages === PAGINATION.DEFAULT_PAGE) {
-        newSearchParams.delete('p')
-      } else {
-        newSearchParams.set('p', totalPages.toString())
-      }
-      setSearchParams(newSearchParams)
-    }
-  }, [currentPage, totalPages, searchParams, setSearchParams])
-
-  // Auto-select first job on initial load or when currentPageJobs changes and no job is selected
-  useEffect(() => {
-    if (currentPageJobs.length > 0 && !selectedJobId) {
-      setSelectedJobId(currentPageJobs[0].id)
-    }
-  }, [currentPageJobs, selectedJobId])
+  // Only recalculates when dependencies change
+  const selectedJob = useMemo(() => {
+    return apiJobs.find(job => job.id === selectedJobId)
+  }, [apiJobs, selectedJobId])
 
   return {
-    // Pagination state
+    // Same interface as useJobPagination
     currentPage,
     totalPages,
     totalJobs,
     currentPageJobs,
-
-    // Job selection state
+    selectedJob,
     selectedJobId,
     setSelectedJobId,
-
-    // Actions
     handlePageChange,
+    setSearchParams,
   }
 }

@@ -30,21 +30,20 @@ export const COMPANY_OPTIONS = [
 ]
 
 export const EXPERIENCE_OPTIONS = [
-  'Internship',
-  'Entry level',
-  'Associate',
-  'Mid-Senior level',
+  'Entry-level',
+  'Mid-level',
+  'Senior',
+  'Manager',
   'Director',
   'Executive',
 ]
 
-export const MODE_OPTIONS = ['On-site', 'Remote', 'Hybrid']
+export const MODE_OPTIONS = ['Remote', 'Hybrid', 'Onsite']
 
 export const TYPE_OPTIONS = [
   'Full-time',
   'Part-time',
-  'Contract',
-  'Freelance',
+  'Contractor',
   'Temporary',
   'Internship',
 ]
