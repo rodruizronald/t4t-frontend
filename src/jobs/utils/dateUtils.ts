@@ -1,14 +1,7 @@
 import { format, subDays } from 'date-fns'
 
 import { DATE_VALUES, type DateValue } from '../constants/filterOptions'
-
-/**
- * Date range object for API requests
- */
-export interface DateRange {
-  date_from: string
-  date_to: string
-}
+import { DateRange } from '../types/api'
 
 /**
  * Convert frontend date filter to API date range

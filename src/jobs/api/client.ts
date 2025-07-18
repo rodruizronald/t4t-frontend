@@ -1,23 +1,47 @@
 import { getApiBaseUrl } from '../../services/api/config'
-import { buildApiParams, buildApiUrl } from '../utils/apiParamsBuilder'
-import { transformSearchResponse } from './jobTransformer'
+import type { FilterState } from '../constants/defaultFilters'
+import type { SearchResponse } from '../types/models'
+import type { PaginationParams } from '../types/pagination'
+import { buildApiParams, buildApiUrl } from './paramsBuilder'
+import { transformSearchResponse } from './transformer'
+
+/**
+ * Error response from the job API
+ */
+interface ApiError {
+  message: string
+  type: string
+}
+
+/**
+ * Extended search response with possible error
+ */
+interface SearchResponseWithError extends SearchResponse {
+  error?: ApiError
+}
 
 /**
  * Job API service
  */
 class JobService {
+  private baseUrl: string
+
   constructor() {
     this.baseUrl = getApiBaseUrl()
   }
 
   /**
    * Search for jobs using the API
-   * @param {string} searchQuery - The search query
-   * @param {Object} filters - The active filters
-   * @param {Object} pagination - Pagination parameters
-   * @returns {Promise} API response promise
+   * @param searchQuery - The search query
+   * @param filters - The active filters
+   * @param pagination - Pagination parameters
+   * @returns API response promise
    */
-  async searchJobs(searchQuery, filters = {}, pagination = {}) {
+  async searchJobs(
+    searchQuery: string,
+    filters: Partial<FilterState> = {},
+    pagination: PaginationParams = {}
+  ): Promise<SearchResponseWithError> {
     try {
       // Build API parameters
       const apiParams = buildApiParams(searchQuery, filters, pagination)
@@ -48,16 +72,19 @@ class JobService {
 
       return transformedData
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error'
+
       return {
         jobs: [],
         pagination: {
           total: 0,
-          limit: pagination.pageSize || 20,
-          offset: ((pagination.page || 1) - 1) * (pagination.pageSize || 20),
+          limit: pagination.pageSize ?? 20,
+          offset: ((pagination.page ?? 1) - 1) * (pagination.pageSize ?? 20),
           hasMore: false,
         },
         error: {
-          message: error.message,
+          message: errorMessage,
           type: 'API_ERROR',
         },
       }

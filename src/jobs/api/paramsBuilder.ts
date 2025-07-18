@@ -1,36 +1,7 @@
 import type { FilterState } from '../constants/defaultFilters'
-import { getDateRange, isDateFilterActive } from './dateUtils'
-
-/**
- * API parameters interface
- */
-export interface ApiParams {
-  q?: string
-  date_from?: string
-  date_to?: string
-  company?: string
-  experience_level?: string
-  work_mode?: string
-  employment_type?: string
-  limit: number
-  offset: number
-  [key: string]: string | number | undefined
-}
-
-/**
- * Search parameters interface for type-safe parameter handling
- */
-export interface SearchParams {
-  [key: string]: string | number | boolean | undefined | null
-}
-
-/**
- * Pagination parameters interface
- */
-export interface PaginationParams {
-  page?: number
-  pageSize?: number
-}
+import type { ApiParams, SearchParams } from '../types/api'
+import type { PaginationParams } from '../types/pagination'
+import { getDateRange, isDateFilterActive } from '../utils/dateUtils'
 
 /**
  * Build API query parameters from frontend search state

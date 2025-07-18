@@ -1,3 +1,11 @@
+import {
+  ApiJob,
+  ApiRequirements,
+  ApiSearchResponse,
+  ApiTechnology,
+} from '../types/api'
+import { Job, SearchResponse } from '../types/models'
+
 /**
  * Transform API job response to frontend format
  * Converts snake_case API fields to camelCase frontend fields
@@ -5,10 +13,10 @@
 
 /**
  * Transform a single job from API format to frontend format
- * @param {Object} apiJob - Job object from API response
- * @returns {Object} Transformed job object for frontend use
+ * @param apiJob - Job object from API response
+ * @returns Transformed job object for frontend use
  */
-export const transformJob = apiJob => {
+export const transformJob = (apiJob: ApiJob | null | undefined): Job | null => {
   if (!apiJob) return null
 
   return {
@@ -17,12 +25,12 @@ export const transformJob = apiJob => {
     title: apiJob.title,
     company: apiJob.company_name,
     companyId: apiJob.company_id,
-    companyLogoUrl: apiJob.company_logo_url,
+    companyLogoUrl: apiJob.company_logo_url, // This is already optional in ApiJob
 
     // Job details
     description: apiJob.description,
-    responsibilities: apiJob.responsibilities || [],
-    benefits: apiJob.benefits || [],
+    responsibilities: apiJob.responsibilities ?? [],
+    benefits: apiJob.benefits ?? [],
     applicationUrl: apiJob.application_url,
 
     // Job classification
@@ -44,24 +52,26 @@ export const transformJob = apiJob => {
 
 /**
  * Transform requirements object from API format
- * @param {Object} apiRequirements - Requirements from API
- * @returns {Object} Transformed requirements object
+ * @param apiRequirements - Requirements from API
+ * @returns Transformed requirements object
  */
-const transformRequirements = apiRequirements => {
+const transformRequirements = (
+  apiRequirements?: ApiRequirements
+): { mustHave: string[]; niceToHave: string[] } => {
   if (!apiRequirements) return { mustHave: [], niceToHave: [] }
 
   return {
-    mustHave: apiRequirements.must_have || [],
-    niceToHave: apiRequirements.nice_to_have || [],
+    mustHave: apiRequirements.must_have ?? [],
+    niceToHave: apiRequirements.nice_to_have ?? [],
   }
 }
 
 /**
  * Transform technologies array from API format
- * @param {Array} apiTechnologies - Technologies array from API
- * @returns {Array} Array of technology names
+ * @param apiTechnologies - Technologies array from API
+ * @returns Array of technology names
  */
-const transformTechnologies = apiTechnologies => {
+const transformTechnologies = (apiTechnologies?: ApiTechnology[]): string[] => {
   if (!Array.isArray(apiTechnologies)) return []
 
   return apiTechnologies.map(tech => tech.name)
@@ -69,16 +79,16 @@ const transformTechnologies = apiTechnologies => {
 
 /**
  * Transform posted date from API format to display format
- * @param {string} apiPostedAt - ISO date string from API
- * @returns {string} Human-readable date string
+ * @param apiPostedAt - ISO date string from API
+ * @returns Human-readable date string
  */
-const transformPostedDate = apiPostedAt => {
-  if (!apiPostedAt) return 'Unknown'
+const transformPostedDate = (apiPostedAt?: string): string => {
+  if (!apiPostedAt) return 'unknown'
 
   try {
     const postedDate = new Date(apiPostedAt)
     const now = new Date()
-    const diffInMs = now - postedDate
+    const diffInMs = now.getTime() - postedDate.getTime()
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60))
     const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60))
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
@@ -106,30 +116,34 @@ const transformPostedDate = apiPostedAt => {
 
 /**
  * Transform array of jobs from API format to frontend format
- * @param {Array} apiJobs - Array of job objects from API
- * @returns {Array} Array of transformed job objects
+ * @param apiJobs - Array of job objects from API
+ * @returns Array of transformed job objects
  */
-export const transformJobs = apiJobs => {
+export const transformJobs = (apiJobs?: ApiJob[]): Job[] => {
   if (!Array.isArray(apiJobs)) return []
 
-  return apiJobs.map(transformJob).filter(Boolean) // Filter out any null results
+  return apiJobs.map(transformJob).filter(Boolean) as Job[] // Filter out any null results
 }
 
 /**
  * Transform API search response to frontend format
- * @param {Object} apiResponse - Complete API response
- * @returns {Object} Transformed response object
+ * @param apiResponse - Complete API response
+ * @returns Transformed response object
  */
-export const transformSearchResponse = apiResponse => {
+export const transformSearchResponse = (
+  apiResponse?: ApiSearchResponse
+): SearchResponse => {
   if (!apiResponse) return { jobs: [], pagination: null }
 
   return {
     jobs: transformJobs(apiResponse.data),
-    pagination: {
-      total: apiResponse.pagination?.total || 0,
-      limit: apiResponse.pagination?.limit || 20,
-      offset: apiResponse.pagination?.offset || 0,
-      hasMore: apiResponse.pagination?.has_more || false,
-    },
+    pagination: apiResponse.pagination
+      ? {
+          total: apiResponse.pagination?.total ?? 0,
+          limit: apiResponse.pagination?.limit ?? 20,
+          offset: apiResponse.pagination?.offset ?? 0,
+          hasMore: apiResponse.pagination?.has_more ?? false,
+        }
+      : null,
   }
 }

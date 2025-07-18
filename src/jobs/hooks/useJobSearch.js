@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { jobService } from '../services/jobService'
+import { jobService } from '../api/client'
 
 /**
  * Custom hook for managing job search API calls

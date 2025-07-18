@@ -1,15 +1,20 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
+
+// Create __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@jobs': fileURLToPath(new URL('./src/jobs', import.meta.url)),
-      '@shared': fileURLToPath(new URL('./src/shared', import.meta.url)),
+      '@': resolve(__dirname, './src'),
+      '@jobs': resolve(__dirname, './src/jobs'),
+      '@shared': resolve(__dirname, './src/shared'),
     },
   },
   server: {
