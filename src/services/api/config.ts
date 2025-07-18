@@ -6,7 +6,7 @@
  * Get the API base URL based on the current environment
  * @returns {string} The API base URL
  */
-export const getApiBaseUrl = () => {
+export const getApiBaseUrl = (): string => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL
 
   if (!baseUrl) {
@@ -21,7 +21,7 @@ export const getApiBaseUrl = () => {
  * Get the current environment mode
  * @returns {string} The current mode (development, production, etc.)
  */
-export const getEnvironmentMode = () => {
+export const getEnvironmentMode = (): string => {
   return import.meta.env.MODE
 }
 
@@ -29,7 +29,7 @@ export const getEnvironmentMode = () => {
  * Check if we're in development mode
  * @returns {boolean} True if in development mode
  */
-export const isDevelopment = () => {
+export const isDevelopment = (): boolean => {
   return import.meta.env.DEV
 }
 
@@ -37,6 +37,6 @@ export const isDevelopment = () => {
  * Check if we're in production mode
  * @returns {boolean} True if in production mode
  */
-export const isProduction = () => {
+export const isProduction = (): boolean => {
   return import.meta.env.PROD
 }
