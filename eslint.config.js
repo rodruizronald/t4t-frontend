@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
 export default [
   {
@@ -15,6 +16,7 @@ export default [
       '@typescript-eslint': tseslint,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'simple-import-sort': simpleImportSort,
     },
     languageOptions: {
       parser: tsParser,
@@ -32,6 +34,10 @@ export default [
       ...tseslint.configs['recommended'].rules,
       ...reactHooks.configs['recommended-latest'].rules,
       ...reactRefresh.configs.vite.rules,
+
+      // Import sorting rules
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
 
       // TypeScript unused vars rule
       '@typescript-eslint/no-unused-vars': [

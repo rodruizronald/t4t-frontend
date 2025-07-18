@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { jobService } from '../services/jobService'
-import { logApiError } from '../utils/apiErrorHandler'
+
 
 /**
  * Custom hook for managing job search API calls

@@ -1,5 +1,5 @@
-import { getDateRange, isDateFilterActive } from './dateUtils'
 import type { FilterState } from '../constants/defaultFilters'
+import { getDateRange, isDateFilterActive } from './dateUtils'
 
 /**
  * API parameters interface

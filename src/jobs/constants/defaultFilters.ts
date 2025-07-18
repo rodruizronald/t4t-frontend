@@ -1,12 +1,12 @@
-import { FILTER_TYPES } from './filterTypes'
-import { DATE_VALUES } from './filterOptions'
 import type {
-  DateValue,
   CompanyOption,
+  DateValue,
   ExperienceOption,
   ModeOption,
   TypeOption,
 } from './filterOptions'
+import { DATE_VALUES } from './filterOptions'
+import { FILTER_TYPES } from './filterTypes'
 
 // Type for individual filter values
 export type FilterValue =
