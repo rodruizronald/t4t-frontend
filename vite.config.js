@@ -28,6 +28,7 @@ export default defineConfig({
             '@emotion/styled',
           ],
           router: ['react-router-dom'],
+          dateUtils: ['date-fns'],
         },
       },
     },

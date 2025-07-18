@@ -1,9 +1,21 @@
 import { FILTER_TYPES } from './filterTypes'
 import { DATE_VALUES } from './filterOptions'
-import type { DateValue, CompanyOption, ExperienceOption, ModeOption, TypeOption } from './filterOptions'
+import type {
+  DateValue,
+  CompanyOption,
+  ExperienceOption,
+  ModeOption,
+  TypeOption,
+} from './filterOptions'
 
 // Type for individual filter values
-export type FilterValue = DateValue | CompanyOption[] | ExperienceOption[] | ModeOption[] | TypeOption[] | null
+export type FilterValue =
+  | DateValue
+  | CompanyOption[]
+  | ExperienceOption[]
+  | ModeOption[]
+  | TypeOption[]
+  | null
 
 // Type for the complete filter state
 export interface FilterState {

@@ -3,20 +3,21 @@ import { FILTER_TYPES, type FilterType } from './filterTypes'
 // Date filter constants
 export const DATE_VALUES = {
   ANY: 'any',
-  MONTH: 'month', 
+  MONTH: 'month',
   WEEK: 'week',
   HOURS_24: '24hours',
 } as const
 
-export type DateValue = typeof DATE_VALUES[keyof typeof DATE_VALUES]
+export type DateValue = (typeof DATE_VALUES)[keyof typeof DATE_VALUES]
 
 // Date options with proper typing
-export const DATE_OPTIONS: ReadonlyArray<{ value: DateValue; label: string }> = [
-  { value: DATE_VALUES.ANY, label: 'Any time' },
-  { value: DATE_VALUES.MONTH, label: 'Past month' },
-  { value: DATE_VALUES.WEEK, label: 'Past week' },
-  { value: DATE_VALUES.HOURS_24, label: 'Past 24 hours' },
-] as const
+export const DATE_OPTIONS: ReadonlyArray<{ value: DateValue; label: string }> =
+  [
+    { value: DATE_VALUES.ANY, label: 'Any time' },
+    { value: DATE_VALUES.MONTH, label: 'Past month' },
+    { value: DATE_VALUES.WEEK, label: 'Past week' },
+    { value: DATE_VALUES.HOURS_24, label: 'Past 24 hours' },
+  ] as const
 
 // Company options
 export const COMPANY_OPTIONS: readonly string[] = [
@@ -61,7 +62,10 @@ export const TYPE_OPTIONS: readonly string[] = [
 ] as const
 
 // Combined filter options with proper typing
-export const FILTER_OPTIONS: Record<FilterType, readonly string[] | ReadonlyArray<{ value: DateValue; label: string }>> = {
+export const FILTER_OPTIONS: Record<
+  FilterType,
+  readonly string[] | ReadonlyArray<{ value: DateValue; label: string }>
+> = {
   [FILTER_TYPES.DATE]: DATE_OPTIONS,
   [FILTER_TYPES.COMPANY]: COMPANY_OPTIONS,
   [FILTER_TYPES.EXPERIENCE]: EXPERIENCE_OPTIONS,
@@ -70,7 +74,7 @@ export const FILTER_OPTIONS: Record<FilterType, readonly string[] | ReadonlyArra
 } as const
 
 // Export types for use in components
-export type CompanyOption = typeof COMPANY_OPTIONS[number]
-export type ExperienceOption = typeof EXPERIENCE_OPTIONS[number]
-export type ModeOption = typeof MODE_OPTIONS[number]
-export type TypeOption = typeof TYPE_OPTIONS[number]
+export type CompanyOption = (typeof COMPANY_OPTIONS)[number]
+export type ExperienceOption = (typeof EXPERIENCE_OPTIONS)[number]
+export type ModeOption = (typeof MODE_OPTIONS)[number]
+export type TypeOption = (typeof TYPE_OPTIONS)[number]

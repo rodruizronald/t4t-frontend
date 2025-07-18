@@ -58,14 +58,6 @@ export function useJobSearch() {
         setSearchState(newState)
         return newState
       } catch (error) {
-        // Enhanced error logging
-        logApiError('Job Search', error, {
-          searchQuery,
-          filters,
-          pagination,
-          timestamp: new Date().toISOString(),
-        })
-
         // Reset state on error
         const errorState = {
           jobs: [],
