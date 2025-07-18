@@ -12,4 +12,25 @@ export default defineConfig({
       '@shared': fileURLToPath(new URL('./src/shared', import.meta.url)),
     },
   },
+  server: {
+    port: 3000,
+    open: true,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          mui: [
+            '@mui/material',
+            '@mui/icons-material',
+            '@emotion/react',
+            '@emotion/styled',
+          ],
+          router: ['react-router-dom'],
+        },
+      },
+    },
+  },
+  envPrefix: 'VITE_',
 })
