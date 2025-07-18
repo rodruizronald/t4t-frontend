@@ -2,29 +2,39 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import tseslint from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 
-export default defineConfig([
-  globalIgnores(['dist']),
+export default [
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
+    ignores: ['dist/**/*'],
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    plugins: {
+      '@typescript-eslint': tseslint,
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
     languageOptions: {
+      parser: tsParser,
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
         sourceType: 'module',
+        project: './tsconfig.json',
       },
     },
     rules: {
-      // Enhanced unused vars rule with better patterns
-      'no-unused-vars': [
+      ...js.configs.recommended.rules,
+      ...tseslint.configs['recommended'].rules,
+      ...reactHooks.configs['recommended-latest'].rules,
+      ...reactRefresh.configs.vite.rules,
+
+      // TypeScript unused vars rule
+      '@typescript-eslint/no-unused-vars': [
         'error',
         {
           varsIgnorePattern: '^[A-Z_]',
@@ -32,6 +42,13 @@ export default defineConfig([
           ignoreRestSiblings: true,
         },
       ],
+
+      // TypeScript specific rules
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+
       // Additional rules to catch unused/dead code
       'no-unreachable': 'error',
       'no-unused-expressions': 'error',
@@ -41,4 +58,4 @@ export default defineConfig([
       'no-useless-escape': 'error',
     },
   },
-])
+]
