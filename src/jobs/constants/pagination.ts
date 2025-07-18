@@ -1,5 +1,5 @@
 export const PAGINATION = {
-  PAGE_SIZE: 20,
+  PAGE_SIZE: 1,
   DEFAULT_PAGE: 1,
 } as const
 
