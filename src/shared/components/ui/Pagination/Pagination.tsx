@@ -1,12 +1,22 @@
-import { Box, Button, IconButton } from '@mui/material'
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
+import { Box, Button, IconButton } from '@mui/material'
 
-export default function Pagination({ currentPage, totalPages, onPageChange }) {
+interface PaginationProps {
+  currentPage: number
+  totalPages: number
+  onPageChange: (page: number) => void
+}
+
+export default function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   // Don't render if there's only one page or no pages
   if (totalPages <= 1) return null
 
-  const generatePageNumbers = () => {
-    const pages = []
+  const generatePageNumbers = (): (number | string)[] => {
+    const pages: (number | string)[] = []
 
     // Always show first page
     pages.push(1)
@@ -96,7 +106,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
             <Button
               key={page}
               variant={currentPage === page ? 'contained' : 'outlined'}
-              onClick={() => onPageChange(page)}
+              onClick={() => onPageChange(page as number)}
               sx={{
                 minWidth: '36px',
                 width: '36px',

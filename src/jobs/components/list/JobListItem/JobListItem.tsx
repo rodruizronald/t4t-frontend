@@ -1,11 +1,20 @@
-import { Box, Typography, Avatar, Divider } from '@mui/material'
+import { Avatar, Box, Divider, Typography } from '@mui/material'
+
+import type { Job } from '../../../types/models'
+
+interface JobListItemProps {
+  job: Job
+  isSelected: boolean
+  onClick: () => void
+  isLast?: boolean
+}
 
 export default function JobListItem({
   job,
   isSelected,
   onClick,
   isLast = false,
-}) {
+}: JobListItemProps) {
   const { title, company, postedDate } = job
 
   return (

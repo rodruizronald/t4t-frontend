@@ -1,6 +1,22 @@
-import { Box, Typography, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
+
+import Pagination from '@/shared/components/ui/Pagination'
+
+import type { Job } from '../../types/models'
 import JobListItem from './JobListItem'
-import Pagination from '@shared/components/ui/Pagination'
+
+interface JobListProps {
+  jobs?: Job[]
+  selectedJobId?: string
+  onJobSelect: (job: Job) => void
+  isLoading?: boolean
+  resultsCount?: number
+  searchQuery?: string
+  // Pagination props
+  currentPage?: number
+  totalPages?: number
+  onPageChange: (page: number) => void
+}
 
 export default function JobList({
   jobs = [],
@@ -13,7 +29,7 @@ export default function JobList({
   currentPage = 1,
   totalPages = 1,
   onPageChange,
-}) {
+}: JobListProps) {
   return (
     <Box
       sx={{
