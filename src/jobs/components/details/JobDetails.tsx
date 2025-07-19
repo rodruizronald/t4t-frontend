@@ -1,16 +1,22 @@
-import { Box, Button, Avatar, Typography, Stack } from '@mui/material'
-import { useState, useEffect, useRef } from 'react'
 import {
   LocationOn,
   Schedule,
-  WorkOutline,
   TrendingUp,
+  WorkOutline,
 } from '@mui/icons-material'
+import { Avatar, Box, Button, Stack, Typography } from '@mui/material'
+import { useEffect, useRef, useState } from 'react'
 
-export default function JobDetails({ job }) {
+import type { Job } from '../../types/models'
+
+interface JobDetailsProps {
+  job?: Job | null
+}
+
+export default function JobDetails({ job }: JobDetailsProps) {
   const [showStickyHeader, setShowStickyHeader] = useState(false)
-  const headerRef = useRef(null)
-  const scrollContainerRef = useRef(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
