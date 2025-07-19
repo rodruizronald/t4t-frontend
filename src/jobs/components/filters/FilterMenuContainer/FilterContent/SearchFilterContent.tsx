@@ -1,4 +1,13 @@
-import { TextField, FormControlLabel, Checkbox, Box } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material'
+
+interface SearchFilterContentProps {
+  options: readonly string[]
+  selectedValues: string[]
+  onChange: (value: string) => void
+  searchValue: string
+  onSearchChange: (value: string) => void
+  searchPlaceholder?: string
+}
 
 export default function SearchFilterContent({
   options,
@@ -7,8 +16,8 @@ export default function SearchFilterContent({
   searchValue,
   onSearchChange,
   searchPlaceholder = 'Search...',
-}) {
-  const handleCheckboxChange = value => {
+}: SearchFilterContentProps) {
+  const handleCheckboxChange = (value: string) => {
     onChange(value)
   }
 

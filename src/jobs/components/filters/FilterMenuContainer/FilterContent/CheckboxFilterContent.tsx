@@ -1,11 +1,17 @@
-import { FormControlLabel, Checkbox } from '@mui/material'
+import { Checkbox, FormControlLabel } from '@mui/material'
+
+interface CheckboxFilterContentProps {
+  options: readonly string[]
+  selectedValues: string[]
+  onChange: (value: string) => void
+}
 
 export default function CheckboxFilterContent({
   options,
   selectedValues,
   onChange,
-}) {
-  const handleCheckboxChange = value => {
+}: CheckboxFilterContentProps) {
+  const handleCheckboxChange = (value: string) => {
     onChange(value)
   }
 

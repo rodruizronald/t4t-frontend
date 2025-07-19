@@ -73,6 +73,9 @@ export const FILTER_OPTIONS: Record<
   [FILTER_TYPES.TYPE]: TYPE_OPTIONS,
 } as const
 
+// Export the type for FILTER_OPTIONS
+export type FilterOptions = typeof FILTER_OPTIONS
+
 // Export types for use in components
 export type CompanyOption = (typeof COMPANY_OPTIONS)[number]
 export type ExperienceOption = (typeof EXPERIENCE_OPTIONS)[number]

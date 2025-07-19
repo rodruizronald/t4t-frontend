@@ -1,7 +1,20 @@
-import { Menu, Box, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { Box, IconButton, Menu } from '@mui/material'
+import type { ReactNode } from 'react'
 
-export default function FilterMenu({ anchorEl, open, onClose, children }) {
+interface FilterMenuProps {
+  anchorEl: HTMLElement | null
+  open: boolean
+  onClose: () => void
+  children: ReactNode
+}
+
+export default function FilterMenu({
+  anchorEl,
+  open,
+  onClose,
+  children,
+}: FilterMenuProps) {
   return (
     <Menu
       anchorEl={anchorEl}
