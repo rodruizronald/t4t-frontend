@@ -1,14 +1,26 @@
+import SearchIcon from '@mui/icons-material/Search'
 import {
   AppBar,
   Box,
   Button,
-  TextField,
   Container,
-  Stack,
   InputAdornment,
+  Stack,
+  TextField,
 } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import FilterChip from '@jobs/components/filters/FilterChip'
+import { MouseEvent } from 'react'
+
+import FilterChip from '@/jobs/components/filters/FilterChip'
+
+interface HeaderProps {
+  searchQuery: string
+  onSearchChange: (query: string) => void
+  onSearch: () => void
+  filterOptions?: Record<string, unknown>
+  anchorEls?: Record<string, HTMLElement | null>
+  onFilterClick: (filter: string, event: MouseEvent<HTMLElement>) => void
+  getActiveFilterCount: (filter: string) => number
+}
 
 export default function Header({
   searchQuery,
@@ -18,7 +30,7 @@ export default function Header({
   anchorEls = {},
   onFilterClick,
   getActiveFilterCount,
-}) {
+}: HeaderProps) {
   return (
     <AppBar
       position='sticky'
@@ -30,7 +42,7 @@ export default function Header({
       }}
     >
       <Container
-        maxWidth={true}
+        maxWidth={false}
         sx={{
           px: { xs: 2, sm: 4, md: 8, lg: 18, xl: 36 },
         }}
@@ -107,7 +119,7 @@ export default function Header({
               <FilterChip
                 key={filter}
                 filter={filter}
-                isActive={anchorEls[filter]}
+                isActive={anchorEls[filter] ?? null}
                 activeCount={getActiveFilterCount(filter)}
                 onClick={onFilterClick}
               />
