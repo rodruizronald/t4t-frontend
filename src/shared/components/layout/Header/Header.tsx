@@ -1,3 +1,10 @@
+import {
+  AnchorFilters,
+  DEFAULT_FILTER_STATE,
+  FILTER_OPTIONS,
+  FilterOptions,
+  FilterType,
+} from '@jobs/constants'
 import SearchIcon from '@mui/icons-material/Search'
 import {
   AppBar,
@@ -16,18 +23,18 @@ interface HeaderProps {
   searchQuery: string
   onSearchChange: (query: string) => void
   onSearch: () => void
-  filterOptions?: Record<string, unknown>
-  anchorEls?: Record<string, HTMLElement | null>
-  onFilterClick: (filter: string, event: MouseEvent<HTMLElement>) => void
-  getActiveFilterCount: (filter: string) => number
+  filterOptions?: FilterOptions
+  anchorEls?: AnchorFilters
+  onFilterClick: (filter: FilterType, event: MouseEvent<HTMLElement>) => void
+  getActiveFilterCount: (filter: FilterType) => number
 }
 
 export default function Header({
   searchQuery,
   onSearchChange,
   onSearch,
-  filterOptions = {},
-  anchorEls = {},
+  filterOptions = FILTER_OPTIONS,
+  anchorEls = DEFAULT_FILTER_STATE.ANCHORS,
   onFilterClick,
   getActiveFilterCount,
 }: HeaderProps) {
@@ -115,7 +122,7 @@ export default function Header({
 
           {/* Filters Row */}
           <Stack direction='row' spacing={1} flexWrap='wrap' sx={{ gap: 1 }}>
-            {Object.keys(filterOptions).map(filter => (
+            {(Object.keys(filterOptions) as FilterType[]).map(filter => (
               <FilterChip
                 key={filter}
                 filter={filter}

@@ -1,12 +1,17 @@
-import Header from '../Header'
+import { JobDetails, JobFilters, JobList } from '@jobs/components'
+import { FILTER_OPTIONS, PAGINATION } from '@jobs/constants'
+import { useJobFilters, useJobPagination, useJobSearch } from '@jobs/hooks'
+import { Job } from '@jobs/types/models'
 import { Box } from '@mui/material'
+import type { ReactElement } from 'react'
 import { useState } from 'react'
-import { JobList, JobDetails, JobFilters } from '@jobs/components'
-import { useJobFilters, useJobSearch, useJobPagination } from '@jobs/hooks'
-import { PAGINATION, FILTER_OPTIONS } from '@jobs/constants'
+
+import Header from '../Header'
 
 // Extract the URL reset logic to a separate function
-const resetToPageOne = setSearchParams => {
+const resetToPageOne = (
+  setSearchParams: (params: URLSearchParams) => void
+): void => {
   const newSearchParams = new URLSearchParams(window.location.search)
   newSearchParams.delete('p')
 
@@ -21,8 +26,8 @@ const resetToPageOne = setSearchParams => {
   setSearchParams(newSearchParams)
 }
 
-export default function JobLayout() {
-  const [searchQuery, setSearchQuery] = useState('')
+export default function JobLayout(): ReactElement {
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   // Use API job search hook
   const {
@@ -60,7 +65,7 @@ export default function JobLayout() {
     activeFilters
   )
 
-  const handleSearch = async () => {
+  const handleSearch = async (): Promise<void> => {
     // Reset to page 1 and clear selected job
     resetToPageOne(setSearchParams)
 
@@ -79,7 +84,7 @@ export default function JobLayout() {
     }
   }
 
-  const handleJobSelect = job => {
+  const handleJobSelect = (job: Job): void => {
     setSelectedJobId(job.id)
   }
 
@@ -124,7 +129,7 @@ export default function JobLayout() {
         >
           <JobList
             jobs={currentPageJobs}
-            selectedJobId={selectedJobId}
+            selectedJobId={selectedJobId ?? ''}
             onJobSelect={handleJobSelect}
             resultsCount={totalJobs}
             searchQuery={searchQuery}
