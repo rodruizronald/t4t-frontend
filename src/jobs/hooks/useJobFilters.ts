@@ -1,18 +1,18 @@
 import { MouseEvent, useState } from 'react'
 
 import {
+  AnchorFilters,
   DATE_VALUES,
-  DEFAULT_EMPTY_FILTERS,
-  DEFAULT_REFERENCE_FILTERS,
+  DateValue,
+  DEFAULT_FILTER_STATE,
   FILTER_TYPES,
+  FilterState,
+  FilterType,
 } from '../constants'
-import type { FilterState } from '../constants/defaultFilters'
-import type { DateValue } from '../constants/filterOptions'
-import type { FilterType } from '../constants/filterTypes'
 
 // Return type for the useJobFilters hook
 interface UseJobFiltersReturn {
-  anchorEls: FilterState
+  anchorEls: AnchorFilters
   activeFilters: FilterState
   handleFilterClick: (
     filter: FilterType,
@@ -27,11 +27,11 @@ interface UseJobFiltersReturn {
 }
 
 export function useJobFilters(): UseJobFiltersReturn {
-  const [anchorEls, setAnchorEls] = useState<FilterState>(
-    DEFAULT_REFERENCE_FILTERS
+  const [anchorEls, setAnchorEls] = useState<AnchorFilters>(
+    DEFAULT_FILTER_STATE.ANCHORS
   )
   const [activeFilters, setActiveFilters] = useState<FilterState>(
-    DEFAULT_EMPTY_FILTERS
+    DEFAULT_FILTER_STATE.FILTERS
   )
 
   const handleFilterClick = (

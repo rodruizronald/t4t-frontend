@@ -1,24 +1,43 @@
 import {
+  AnchorFilters,
+  DEFAULT_FILTER_STATE,
+  FILTER_OPTIONS,
+  FilterOptions,
+  FilterType,
+} from '@jobs/constants'
+import SearchIcon from '@mui/icons-material/Search'
+import {
   AppBar,
   Box,
   Button,
-  TextField,
   Container,
-  Stack,
   InputAdornment,
+  Stack,
+  TextField,
 } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import FilterChip from '@jobs/components/filters/FilterChip'
+import { MouseEvent } from 'react'
+
+import FilterChip from '@/jobs/components/filters/FilterChip'
+
+interface HeaderProps {
+  searchQuery: string
+  onSearchChange: (query: string) => void
+  onSearch: () => void
+  filterOptions?: FilterOptions
+  anchorEls?: AnchorFilters
+  onFilterClick: (filter: FilterType, event: MouseEvent<HTMLElement>) => void
+  getActiveFilterCount: (filter: FilterType) => number
+}
 
 export default function Header({
   searchQuery,
   onSearchChange,
   onSearch,
-  filterOptions = {},
-  anchorEls = {},
+  filterOptions = FILTER_OPTIONS,
+  anchorEls = DEFAULT_FILTER_STATE.ANCHORS,
   onFilterClick,
   getActiveFilterCount,
-}) {
+}: HeaderProps) {
   return (
     <AppBar
       position='sticky'
@@ -30,7 +49,7 @@ export default function Header({
       }}
     >
       <Container
-        maxWidth={true}
+        maxWidth={false}
         sx={{
           px: { xs: 2, sm: 4, md: 8, lg: 18, xl: 36 },
         }}
@@ -103,11 +122,11 @@ export default function Header({
 
           {/* Filters Row */}
           <Stack direction='row' spacing={1} flexWrap='wrap' sx={{ gap: 1 }}>
-            {Object.keys(filterOptions).map(filter => (
+            {(Object.keys(filterOptions) as FilterType[]).map(filter => (
               <FilterChip
                 key={filter}
                 filter={filter}
-                isActive={anchorEls[filter]}
+                isActive={anchorEls[filter] ?? null}
                 activeCount={getActiveFilterCount(filter)}
                 onClick={onFilterClick}
               />

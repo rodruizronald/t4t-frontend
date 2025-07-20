@@ -1,7 +1,22 @@
-import { Badge, Chip } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Badge, Chip } from '@mui/material'
+import React from 'react'
 
-export default function FilterChip({ filter, isActive, activeCount, onClick }) {
+import { FilterType } from '../../../constants/filterTypes'
+
+interface FilterChipProps {
+  filter: FilterType
+  isActive: HTMLElement | null
+  activeCount: number
+  onClick: (filter: FilterType, event: React.MouseEvent<HTMLElement>) => void
+}
+
+export default function FilterChip({
+  filter,
+  isActive,
+  activeCount,
+  onClick,
+}: FilterChipProps) {
   return (
     <Badge
       badgeContent={activeCount}
