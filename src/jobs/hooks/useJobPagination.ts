@@ -30,7 +30,7 @@ interface UseJobPaginationReturn {
   totalPages: number
   totalJobs: number
   currentPageJobs: Job[]
-  selectedJob: Job | undefined
+  selectedJob: Job | null
   selectedJobId: string | null
   setSelectedJobId: (id: string | null) => void
   handlePageChange: (newPage: number) => Promise<void>
@@ -96,7 +96,7 @@ export function useJobPagination(
 
   // Only recalculates when dependencies change
   const selectedJob = useMemo(() => {
-    return apiJobs.find(job => job.id === selectedJobId)
+    return apiJobs.find(job => job.id === selectedJobId) ?? null
   }, [apiJobs, selectedJobId])
 
   return {

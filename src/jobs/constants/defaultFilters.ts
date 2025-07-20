@@ -6,7 +6,7 @@ import type {
   TypeOption,
 } from './filterOptions'
 import { DATE_VALUES } from './filterOptions'
-import { FILTER_TYPES } from './filterTypes'
+import { FILTER_TYPES, FilterType } from './filterTypes'
 
 // Type for individual filter values
 export type FilterValue =
@@ -26,18 +26,26 @@ export interface FilterState {
   [FILTER_TYPES.TYPE]: TypeOption[] | null
 }
 
-export const DEFAULT_EMPTY_FILTERS: FilterState = {
-  [FILTER_TYPES.DATE]: DATE_VALUES.ANY,
-  [FILTER_TYPES.COMPANY]: [],
-  [FILTER_TYPES.EXPERIENCE]: [],
-  [FILTER_TYPES.MODE]: [],
-  [FILTER_TYPES.TYPE]: [],
+// Type for the anchor elements for each filter
+export type AnchorFilters = Record<FilterType, HTMLElement | null>
+
+export const DEFAULT_FILTER_STATE = {
+  FILTERS: {
+    [FILTER_TYPES.DATE]: DATE_VALUES.ANY,
+    [FILTER_TYPES.COMPANY]: [],
+    [FILTER_TYPES.EXPERIENCE]: [],
+    [FILTER_TYPES.MODE]: [],
+    [FILTER_TYPES.TYPE]: [],
+  } as const satisfies FilterState,
+
+  ANCHORS: {
+    [FILTER_TYPES.DATE]: null,
+    [FILTER_TYPES.COMPANY]: null,
+    [FILTER_TYPES.EXPERIENCE]: null,
+    [FILTER_TYPES.MODE]: null,
+    [FILTER_TYPES.TYPE]: null,
+  } as const satisfies AnchorFilters,
 } as const
 
-export const DEFAULT_REFERENCE_FILTERS: FilterState = {
-  [FILTER_TYPES.DATE]: null,
-  [FILTER_TYPES.COMPANY]: null,
-  [FILTER_TYPES.EXPERIENCE]: null,
-  [FILTER_TYPES.MODE]: null,
-  [FILTER_TYPES.TYPE]: null,
-} as const
+// Export the type for DEFAULT_FILTER_STATE
+export type DefaultFilterState = typeof DEFAULT_FILTER_STATE
