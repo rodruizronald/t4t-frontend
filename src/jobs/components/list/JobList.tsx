@@ -39,6 +39,9 @@ export default function JobList({
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        borderRadius: 2,
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
       }}
     >
       {/* Sticky Header */}

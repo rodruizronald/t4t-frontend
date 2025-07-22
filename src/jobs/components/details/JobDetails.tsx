@@ -46,6 +46,9 @@ export default function JobDetails({ job }: JobDetailsProps) {
         flexDirection: 'column',
         overflow: 'hidden',
         position: 'relative',
+        borderRadius: 2,
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
       }}
     >
       {/* Sticky Header */}

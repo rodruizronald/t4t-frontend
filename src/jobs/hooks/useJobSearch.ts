@@ -67,6 +67,18 @@ export function useJobSearch(): UseJobSearchReturn {
       filters: Partial<FilterState>,
       pagination: PaginationParams
     ): Promise<SearchState> => {
+      // Don't search if query is empty or just whitespace
+      if (!searchQuery || searchQuery.trim() === '') {
+        console.log('Skipping search - empty query')
+        const emptyState: SearchState = {
+          jobs: [],
+          pagination: null,
+          lastSearchParams: null,
+        }
+        setSearchState(emptyState)
+        return emptyState
+      }
+
       // Prevent duplicate requests
       const currentParams = JSON.stringify({ searchQuery, filters, pagination })
       if (currentParams === searchState.lastSearchParams) {
