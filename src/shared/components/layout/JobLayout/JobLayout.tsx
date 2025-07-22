@@ -28,6 +28,7 @@ const resetToPageOne = (
 
 export default function JobLayout(): ReactElement {
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState<string>('')
 
   // Use API job search hook
   const {
@@ -77,6 +78,7 @@ export default function JobLayout(): ReactElement {
 
       // Only clear selection after successful API call
       setSelectedJobId(null)
+      setAppliedSearchQuery(searchQuery)
 
       console.log('Search completed successfully')
     } catch (error) {
@@ -132,7 +134,7 @@ export default function JobLayout(): ReactElement {
             selectedJobId={selectedJobId ?? ''}
             onJobSelect={handleJobSelect}
             resultsCount={totalJobs}
-            searchQuery={searchQuery}
+            searchQuery={appliedSearchQuery}
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}

@@ -82,6 +82,7 @@ export default function Header({
               onChange={e => onSearchChange(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && onSearch()}
               placeholder='Job title or skill'
+              autoComplete='off'
               size='small'
               sx={{
                 maxWidth: { xs: '100%', sm: 200 },
