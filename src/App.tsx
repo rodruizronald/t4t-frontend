@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import JobLayout from '@shared/components/layout/JobLayout'
+import { type ReactElement } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-function App() {
+function App(): ReactElement {
   return (
     <BrowserRouter>
       <Routes>
