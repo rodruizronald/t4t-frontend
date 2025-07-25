@@ -1,4 +1,5 @@
-import { getApiBaseUrl } from '../../services/api/config'
+import { config } from '@app/config'
+
 import type { FilterState } from '../constants/defaultFilters'
 import type { SearchResponse } from '../types/models'
 import type { PaginationParams } from '../types/pagination'
@@ -27,7 +28,7 @@ class JobService {
   private baseUrl: string
 
   constructor() {
-    this.baseUrl = getApiBaseUrl()
+    this.baseUrl = config.apiUrl
   }
 
   /**
