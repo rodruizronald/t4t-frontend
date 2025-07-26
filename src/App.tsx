@@ -1,4 +1,5 @@
 import { config } from '@app/config'
+import { QueryProvider } from '@app/providers/query'
 import JobLayout from '@shared/components/layout/JobLayout'
 import { useLogger } from '@shared/utils/logger'
 import { type ReactElement } from 'react'
@@ -18,12 +19,14 @@ function App(): ReactElement {
   })
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Navigate to='/jobs/search' replace />} />
-        <Route path='/jobs/search' element={<JobLayout />} />
-      </Routes>
-    </BrowserRouter>
+    <QueryProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Navigate to='/jobs/search' replace />} />
+          <Route path='/jobs/search' element={<JobLayout />} />
+        </Routes>
+      </BrowserRouter>
+    </QueryProvider>
   )
 }
 
