@@ -43,7 +43,8 @@
       "@/*": ["src/*"],
       "@app/*": ["src/app/*"],
       "@jobs/*": ["src/jobs/*"],
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@services/*": ["src/services/*"]
     }
   },
   "include": ["src", "vite-env.d.ts"],

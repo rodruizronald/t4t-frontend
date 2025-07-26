@@ -17,6 +17,7 @@ export default defineConfig({
       '@app': resolve(__dirname, './src/app'),
       '@jobs': resolve(__dirname, './src/jobs'),
       '@shared': resolve(__dirname, './src/shared'),
+      '@services': resolve(__dirname, './src/services'),
     },
   },
   server: {
