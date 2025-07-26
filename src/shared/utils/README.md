@@ -1,6 +1,6 @@
 # React Logger
 
-A comprehensive logging solution for React applications built on top of Winston, with support for external log aggregation services.
+A comprehensive logging solution for React applications built on top of Pino (browser-compatible), with support for external log aggregation services.
 
 ## Features
 
@@ -16,7 +16,7 @@ A comprehensive logging solution for React applications built on top of Winston,
 ## Installation
 
 ```bash
-npm install winston
+npm install pino
 ```
 
 ## Configuration
@@ -29,6 +29,7 @@ interface Config {
   isDevelopment: boolean
   logEndpoint?: string // Optional: External logging service URL
   logApiKey?: string // Optional: API key for external service
+  sendInfoLogs?: boolean // Optional: Send info logs to external service (default: false)
 }
 ```
 
@@ -168,20 +169,26 @@ The logger uses different log levels based on the environment:
 
 - **Production**: Only `warn` and `error` levels are logged
 - **Development**: All levels are logged (`debug`, `info`, `warn`, `error`)
+- **Console Output**: JSON format in production, pretty-printed in development
 
 ## External Log Service Integration
 
-When configured with a log endpoint, the logger automatically sends logs to your external service in production:
+When configured with a log endpoint, the logger automatically sends logs to your external service:
+
+- **Production**: Sends `error` and `warn` logs by default
+- **Info logs**: Only sent if `sendInfoLogs` is set to `true` in config
+- **Debug logs**: Never sent to external service (local only)
 
 ```typescript
 // Logs are automatically sent with additional context:
 {
   level: 'error',
-  message: 'Failed to save user',
+  msg: 'Failed to save user',
   component: 'UserForm',
   userId: '123',
-  error: 'Network timeout',
-  stack: '...',
+  err: { message: 'Network timeout', stack: '...' },
+  errorMessage: 'Network timeout',
+  errorStack: '...',
   timestamp: '2024-01-15T10:30:00.000Z',
   userAgent: 'Mozilla/5.0...',
   url: 'https://app.com/users/123',
@@ -259,8 +266,6 @@ interface MyLogContext extends ReactLogContext {
   }
 }
 ```
-
-## Examples
 
 ### Error Boundary Integration
 
