@@ -1,9 +1,19 @@
 import { config } from '@app/config'
-import winston, { Logger } from 'winston'
+import { pino } from 'pino'
 
-// Simple external logging function
-const sendLogToExternal = async (logData: any) => {
-  if (!config.logEndpoint) return
+// Session ID management
+const getSessionId = (): string => {
+  let sessionId = sessionStorage.getItem('log-session-id')
+  if (!sessionId) {
+    sessionId = `session-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`
+    sessionStorage.setItem('log-session-id', sessionId)
+  }
+  return sessionId
+}
+
+// External logging function
+const sendLogToExternal = async (logEvent: any) => {
+  if (!config.logEndpoint || !config.isProduction) return
 
   try {
     await fetch(config.logEndpoint, {
@@ -15,7 +25,7 @@ const sendLogToExternal = async (logData: any) => {
         }),
       },
       body: JSON.stringify({
-        ...logData,
+        ...logEvent,
         userAgent: navigator.userAgent,
         url: window.location.href,
         sessionId: getSessionId(),
@@ -26,52 +36,25 @@ const sendLogToExternal = async (logData: any) => {
   }
 }
 
-const getSessionId = (): string => {
-  let sessionId = sessionStorage.getItem('log-session-id')
-  if (!sessionId) {
-    sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    sessionStorage.setItem('log-session-id', sessionId)
-  }
-  return sessionId
-}
-
-// Create logger instance
-const logger: Logger = winston.createLogger({
-  level: config.isProduction ? 'warn' : 'debug',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.errors({ stack: true }),
-    winston.format.metadata({
-      fillExcept: ['message', 'level', 'timestamp', 'component', 'action'],
-    }),
-    winston.format.json()
-  ),
-  transports: [
-    // Console transport with conditional formatting
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.timestamp({ format: 'HH:mm:ss' }),
-        config.isDevelopment
-          ? winston.format.colorize()
-          : winston.format.uncolorize(),
-        winston.format.printf(
-          ({ timestamp, level, message, component, action, ...meta }) => {
-            const componentInfo = component ? `[${component}]` : ''
-            const actionInfo = action ? `{${action}}` : ''
-            const metaInfo =
-              Object.keys(meta).length > 0 ? JSON.stringify(meta) : ''
-
-            return `${timestamp} ${level}: ${componentInfo}${actionInfo} ${message} ${metaInfo}`
-          }
-        )
-      ),
-    }),
-  ],
-
-  // Handle uncaught exceptions and rejections
-  exceptionHandlers: [new winston.transports.Console()],
-  rejectionHandlers: [new winston.transports.Console()],
-  exitOnError: false,
+// Create browser-compatible Pino logger
+const baseLogger = pino({
+  browser: {
+    serialize: true,
+    asObject: config.isProduction, // JSON in production, formatted in dev
+    transmit: {
+      level: 'error',
+      send: async (_level, logEvent) => {
+        await sendLogToExternal(logEvent)
+      },
+    },
+  },
+  level: config.logLevel,
+  // Custom formatting for development
+  formatters: {
+    level: label => {
+      return { level: label.toUpperCase() }
+    },
+  },
 })
 
 // React-specific logger interface
@@ -87,74 +70,75 @@ interface ReactLogContext {
 }
 
 class ReactLogger {
-  private logger: Logger
-
-  constructor(logger: Logger) {
-    this.logger = logger
-  }
+  private logger = baseLogger
 
   // Enhanced logging methods with React context
   error(message: string, context?: ReactLogContext, error?: Error) {
     const logData = {
-      level: 'error',
-      message,
       ...context,
-      error: error?.message,
-      stack: error?.stack,
       timestamp: new Date().toISOString(),
+      ...(error && {
+        err: error,
+        errorMessage: error.message,
+        errorStack: error.stack,
+      }),
     }
 
-    this.logger.error(message, logData)
+    this.logger.error(logData, message)
 
-    // Send to external service in production
+    // Manually send to external service for all error levels in production
     if (config.isProduction) {
-      sendLogToExternal(logData)
+      sendLogToExternal({
+        level: 'error',
+        msg: message,
+        ...logData,
+      })
     }
   }
 
   warn(message: string, context?: ReactLogContext) {
     const logData = {
-      level: 'warn',
-      message,
       ...context,
       timestamp: new Date().toISOString(),
     }
 
-    this.logger.warn(message, logData)
+    this.logger.warn(logData, message)
 
+    // Also send warnings to external service in production
     if (config.isProduction) {
-      sendLogToExternal(logData)
+      sendLogToExternal({
+        level: 'warn',
+        msg: message,
+        ...logData,
+      })
     }
   }
 
   info(message: string, context?: ReactLogContext) {
     const logData = {
-      level: 'info',
-      message,
       ...context,
       timestamp: new Date().toISOString(),
     }
 
-    this.logger.info(message, logData)
+    this.logger.info(logData, message)
 
+    // Optionally send info logs to external service
     if (config.isProduction) {
-      sendLogToExternal(logData)
+      sendLogToExternal({
+        level: 'info',
+        msg: message,
+        ...logData,
+      })
     }
   }
 
   debug(message: string, context?: ReactLogContext) {
     const logData = {
-      level: 'debug',
-      message,
       ...context,
       timestamp: new Date().toISOString(),
     }
 
-    this.logger.debug(message, logData)
-
-    if (config.isProduction) {
-      sendLogToExternal(logData)
-    }
+    this.logger.debug(logData, message)
   }
 
   // React-specific methods
@@ -169,18 +153,18 @@ class ReactLogger {
       context.props = sanitizedProps
     }
 
-    this.info(`Component mounted`, context)
+    this.info('Component mounted', context)
   }
 
   componentUnmount(componentName: string) {
-    this.debug(`Component unmounted`, {
+    this.debug('Component unmounted', {
       component: componentName,
       action: 'unmount',
     })
   }
 
   userAction(action: string, component: string, data?: Record<string, any>) {
-    this.info(`User action`, {
+    this.info('User action', {
       component,
       action,
       ...data,
@@ -188,14 +172,22 @@ class ReactLogger {
   }
 
   apiCall(method: string, url: string, status?: number, duration?: number) {
-    const level = status && status >= 400 ? 'error' : 'info'
-    this.logger.log(level, `API call ${method} ${url}`, {
+    const context: ReactLogContext = {
       action: 'api-call',
       method,
       url,
-      status,
-      duration,
-    })
+      ...(status !== undefined && { status }),
+      ...(duration !== undefined && { duration }),
+    }
+
+    const isError = status && status >= 400
+    const message = `API call ${method} ${url}`
+
+    if (isError) {
+      this.error(message, context)
+    } else {
+      this.info(message, context)
+    }
   }
 
   performance(metric: string, value: number, component?: string) {
@@ -209,7 +201,7 @@ class ReactLogger {
       context.component = component
     }
 
-    this.debug(`Performance metric`, context)
+    this.debug('Performance metric', context)
   }
 
   // Sanitize props to avoid logging sensitive data
@@ -234,7 +226,7 @@ class ReactLogger {
 }
 
 // Create and export the React logger instance
-const reactLogger = new ReactLogger(logger)
+const reactLogger = new ReactLogger()
 
 export default reactLogger
 export type { ReactLogContext }
