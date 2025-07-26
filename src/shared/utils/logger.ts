@@ -11,8 +11,10 @@ const getSessionId = (): string => {
   return sessionId
 }
 
-// External logging function
-const sendLogToExternal = async (logEvent: any) => {
+// External logging function with flexible typing
+const sendLogToExternal = async (
+  logEvent: Record<string, unknown>
+): Promise<void> => {
   if (!config.logEndpoint || !config.isProduction) return
 
   try {
@@ -40,16 +42,16 @@ const sendLogToExternal = async (logEvent: any) => {
 const baseLogger = pino({
   browser: {
     serialize: true,
-    asObject: config.isProduction, // JSON in production, formatted in dev
+    asObject: config.isProduction,
     transmit: {
       level: 'error',
       send: async (_level, logEvent) => {
-        await sendLogToExternal(logEvent)
+        // Convert Pino's LogEvent to a plain object for external service
+        await sendLogToExternal({ ...logEvent } as Record<string, unknown>)
       },
     },
   },
   level: config.logLevel,
-  // Custom formatting for development
   formatters: {
     level: label => {
       return { level: label.toUpperCase() }
@@ -62,11 +64,15 @@ interface ReactLogContext {
   component?: string
   action?: string
   userId?: string
-  props?: Record<string, any>
-  state?: Record<string, any>
+  props?: Record<string, unknown>
+  state?: Record<string, unknown>
   metric?: string
   value?: number
-  [key: string]: any
+  method?: string
+  url?: string
+  status?: number
+  duration?: number
+  [key: string]: unknown
 }
 
 class ReactLogger {
@@ -86,11 +92,11 @@ class ReactLogger {
 
     this.logger.error(logData, message)
 
-    // Manually send to external service for all error levels in production
+    // Send simplified data to external service
     if (config.isProduction) {
       sendLogToExternal({
         level: 'error',
-        msg: message,
+        message,
         ...logData,
       })
     }
@@ -108,7 +114,7 @@ class ReactLogger {
     if (config.isProduction) {
       sendLogToExternal({
         level: 'warn',
-        msg: message,
+        message,
         ...logData,
       })
     }
@@ -126,7 +132,7 @@ class ReactLogger {
     if (config.isProduction) {
       sendLogToExternal({
         level: 'info',
-        msg: message,
+        message,
         ...logData,
       })
     }
@@ -142,7 +148,7 @@ class ReactLogger {
   }
 
   // React-specific methods
-  componentMount(componentName: string, props?: Record<string, any>) {
+  componentMount(componentName: string, props?: Record<string, unknown>) {
     const context: ReactLogContext = {
       component: componentName,
       action: 'mount',
@@ -163,7 +169,11 @@ class ReactLogger {
     })
   }
 
-  userAction(action: string, component: string, data?: Record<string, any>) {
+  userAction(
+    action: string,
+    component: string,
+    data?: Record<string, unknown>
+  ) {
     this.info('User action', {
       component,
       action,
@@ -206,8 +216,8 @@ class ReactLogger {
 
   // Sanitize props to avoid logging sensitive data
   private sanitizeProps(
-    props?: Record<string, any>
-  ): Record<string, any> | undefined {
+    props?: Record<string, unknown>
+  ): Record<string, unknown> | undefined {
     if (!props) return undefined
 
     const sensitiveKeys = ['password', 'token', 'apiKey', 'secret', 'key']
@@ -254,7 +264,7 @@ export const useLogger = (componentName: string) => {
     debug: (message: string, context?: Omit<ReactLogContext, 'component'>) =>
       reactLogger.debug(message, { ...context, component: componentName }),
 
-    userAction: (action: string, data?: Record<string, any>) =>
+    userAction: (action: string, data?: Record<string, unknown>) =>
       reactLogger.userAction(action, componentName, data),
 
     performance: (metric: string, value: number) =>
