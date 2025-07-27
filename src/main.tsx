@@ -4,6 +4,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import './styles/globals.css'
 
+import { ErrorBoundaryProvider } from '@app/providers/ErrorBoundaryProvider'
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { StrictMode } from 'react'
@@ -18,9 +19,11 @@ if (!rootElement) throw new Error('Failed to find the root element')
 
 createRoot(rootElement).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <ErrorBoundaryProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </ErrorBoundaryProvider>
   </StrictMode>
 )
