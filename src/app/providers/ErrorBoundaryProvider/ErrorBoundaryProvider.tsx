@@ -1,6 +1,6 @@
 import { config } from '@app/config'
 import { Box, Button, Container, Typography } from '@mui/material'
-import reactLogger from '@shared/utils/logger' // Use your existing logger
+import { logger } from '@services/logger'
 import { type ErrorInfo, type ReactElement, type ReactNode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -23,14 +23,13 @@ function handleError(error: Error, errorInfo: ErrorInfo) {
     url: window.location.href,
     timestamp: new Date().toISOString(),
   }
-
-  reactLogger.error('React Error Boundary caught an error', errorContext, error)
+  logger.error('React Error Boundary caught an error', errorContext, error)
 }
 
 function GlobalErrorFallback({ error, resetErrorBoundary }: Props) {
   const handleRetry = () => {
     // Log retry attempt
-    reactLogger.userAction('error-boundary-retry', 'ErrorBoundaryProvider', {
+    logger.userAction('error-boundary-retry', 'ErrorBoundaryProvider', {
       errorMessage: error.message,
     })
     resetErrorBoundary()
@@ -38,7 +37,7 @@ function GlobalErrorFallback({ error, resetErrorBoundary }: Props) {
 
   const handleRefresh = () => {
     // Log refresh attempt
-    reactLogger.userAction('error-boundary-refresh', 'ErrorBoundaryProvider', {
+    logger.userAction('error-boundary-refresh', 'ErrorBoundaryProvider', {
       errorMessage: error.message,
     })
     window.location.reload()

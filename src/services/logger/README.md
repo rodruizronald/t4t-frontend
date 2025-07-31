@@ -38,16 +38,16 @@ interface Config {
 ### Import the Logger
 
 ```typescript
-import reactLogger from '@/utils/logger'
+import { logger } from '@/services/logger'
 // or use the hook
-import { useLogger } from '@/utils/logger'
+import { useLogger } from '@/services/logger'
 ```
 
 ### Direct Logger Usage
 
 ```typescript
 // Log an error
-reactLogger.error(
+logger.error(
   'Failed to fetch user data',
   {
     component: 'UserProfile',
@@ -57,19 +57,19 @@ reactLogger.error(
 )
 
 // Log a warning
-reactLogger.warn('API response slow', {
+logger.warn('API response slow', {
   component: 'Dashboard',
   responseTime: 3000,
 })
 
 // Log info
-reactLogger.info('User logged in', {
+logger.info('User logged in', {
   component: 'LoginForm',
   userId: '123',
 })
 
 // Log debug (only visible in development)
-reactLogger.debug('State updated', {
+logger.debug('State updated', {
   component: 'Settings',
   previousValue: 'dark',
   newValue: 'light',
@@ -81,7 +81,7 @@ reactLogger.debug('State updated', {
 The `useLogger` hook automatically includes the component name in all logs:
 
 ```typescript
-import { useLogger } from '@/utils/logger';
+import { useLogger } from '@/services/logger';
 
 function UserProfile({ userId }: { userId: string }) {
   const logger = useLogger('UserProfile');
@@ -112,17 +112,17 @@ function UserProfile({ userId }: { userId: string }) {
 
 ```typescript
 // Log component mount
-reactLogger.componentMount('UserProfile', { userId: '123', theme: 'dark' })
+logger.componentMount('UserProfile', { userId: '123', theme: 'dark' })
 
 // Log component unmount
-reactLogger.componentUnmount('UserProfile')
+logger.componentUnmount('UserProfile')
 ```
 
 ### User Actions
 
 ```typescript
 // Log user interactions
-reactLogger.userAction('form-submit', 'ContactForm', {
+logger.userAction('form-submit', 'ContactForm', {
   formId: 'contact-us',
   fields: ['name', 'email', 'message'],
 })
@@ -142,9 +142,9 @@ try {
   const response = await fetch('/api/users')
   const duration = Date.now() - startTime
 
-  reactLogger.apiCall('GET', '/api/users', response.status, duration)
+  logger.apiCall('GET', '/api/users', response.status, duration)
 } catch (error) {
-  reactLogger.apiCall('GET', '/api/users', 0, Date.now() - startTime)
+  logger.apiCall('GET', '/api/users', 0, Date.now() - startTime)
 }
 ```
 
@@ -156,7 +156,7 @@ const renderStart = performance.now()
 // ... component renders ...
 const renderTime = performance.now() - renderStart
 
-reactLogger.performance('render-time', renderTime, 'UserList')
+logger.performance('render-time', renderTime, 'UserList')
 
 // Using the hook
 const logger = useLogger('DataTable')
@@ -202,7 +202,7 @@ The logger automatically sanitizes sensitive fields to prevent accidental loggin
 
 ```typescript
 // This will log: { password: '[REDACTED]', apiKey: '[REDACTED]' }
-reactLogger.componentMount('LoginForm', {
+logger.componentMount('LoginForm', {
   username: 'john@example.com',
   password: 'super-secret',
   apiKey: 'sk-12345',
@@ -256,7 +256,7 @@ The logger automatically creates and tracks session IDs using sessionStorage, he
 The logger is fully typed. You can extend the `ReactLogContext` interface for your specific needs:
 
 ```typescript
-import type { ReactLogContext } from '@/utils/logger'
+import type { ReactLogContext } from '@/services/logger'
 
 interface MyLogContext extends ReactLogContext {
   customField?: string
@@ -272,7 +272,7 @@ interface MyLogContext extends ReactLogContext {
 ```typescript
 class ErrorBoundary extends React.Component {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    reactLogger.error('React error boundary triggered', {
+    logger.error('React error boundary triggered', {
       component: errorInfo.componentStack,
       error: error.message,
       stack: error.stack,
@@ -285,7 +285,7 @@ class ErrorBoundary extends React.Component {
 
 ```typescript
 const loggerMiddleware = store => next => action => {
-  reactLogger.debug('Redux action dispatched', {
+  logger.debug('Redux action dispatched', {
     action: action.type,
     payload: action.payload,
   })
