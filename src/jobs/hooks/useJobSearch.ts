@@ -1,4 +1,7 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
+
+import { useLogger } from '@/services/logging'
 
 import { jobService } from '../api/jobService'
 import type { FilterState } from '../constants/defaultFilters'
@@ -16,11 +19,10 @@ interface SearchState {
     offset: number
     hasMore: boolean
   } | null
-  lastSearchParams: string | null
 }
 
 /**
- * Search parameters for caching
+ * Search parameters for query key
  */
 interface SearchParameters {
   searchQuery: string
@@ -34,32 +36,84 @@ interface SearchParameters {
 interface UseJobSearchReturn {
   jobs: Job[]
   pagination: SearchState['pagination']
+  isLoading: boolean
+  isError: boolean
+  error: Error | null
   searchJobs: (
     searchQuery: string,
     filters: Partial<FilterState>,
     pagination: PaginationParams
   ) => Promise<SearchState>
   clearSearch: () => void
-  retrySearch: () => Promise<SearchState | undefined>
+  retrySearch: () => void
 }
 
 /**
- * Custom hook for managing job search API calls
- * No UI state management - just API functionality
+ * Custom hook for managing job search API calls using React Query
  */
 export function useJobSearch(): UseJobSearchReturn {
-  const [searchState, setSearchState] = useState<SearchState>({
-    jobs: [],
-    pagination: null,
-    lastSearchParams: null,
+  const logger = useLogger('useJobSearch')
+  const queryClient = useQueryClient()
+
+  // Track current search parameters for query key
+  const [searchParams, setSearchParams] = useState<SearchParameters | null>(
+    null
+  )
+
+  // Create query key from search parameters
+  const queryKey = searchParams
+    ? ([
+        'jobs',
+        'search',
+        searchParams.searchQuery,
+        searchParams.filters,
+        searchParams.pagination,
+      ] as const)
+    : (['jobs', 'search', 'empty'] as const)
+
+  // Use React Query for the actual API call
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    queryKey,
+    queryFn: async (): Promise<SearchState> => {
+      if (!searchParams) {
+        // Return empty state for the 'empty' query key
+        return {
+          jobs: [],
+          pagination: null,
+        }
+      }
+
+      const { searchQuery, filters, pagination } = searchParams
+
+      logger.info('Starting job search API call', {
+        searchQuery,
+        filters,
+        pagination,
+      })
+
+      const result = await jobService.searchJobs(
+        searchQuery,
+        filters,
+        pagination
+      )
+
+      logger.info('Job search API successful', {
+        jobCount: result.jobs?.length || 0,
+        pagination: result.pagination,
+      })
+
+      return {
+        jobs: result.jobs || [],
+        pagination: result.pagination ?? null,
+      }
+    },
+    enabled: !!searchParams && !!searchParams.searchQuery?.trim(), // Only run if we have valid search params
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
   })
 
   /**
-   * Perform job search API call
-   * @param searchQuery - Search query string
-   * @param filters - Active filters object
-   * @param pagination - Pagination parameters
-   * @returns API response promise
+   * Perform job search by updating search parameters (triggers React Query)
    */
   const searchJobs = useCallback(
     async (
@@ -69,110 +123,103 @@ export function useJobSearch(): UseJobSearchReturn {
     ): Promise<SearchState> => {
       // Don't search if query is empty or just whitespace
       if (!searchQuery || searchQuery.trim() === '') {
-        console.log('Skipping search - empty query')
+        logger.debug('Skipping search - empty query')
+        setSearchParams(null)
         const emptyState: SearchState = {
           jobs: [],
           pagination: null,
-          lastSearchParams: null,
         }
-        setSearchState(emptyState)
         return emptyState
       }
 
-      // Prevent duplicate requests
-      const currentParams = JSON.stringify({ searchQuery, filters, pagination })
-      if (currentParams === searchState.lastSearchParams) {
-        console.log('Skipping duplicate search request')
-        return searchState
-      }
-
-      console.log('Starting job search API call...', {
-        searchQuery,
+      const newParams: SearchParameters = {
+        searchQuery: searchQuery.trim(),
         filters,
         pagination,
+      }
+
+      // Check if parameters are the same to prevent unnecessary requests
+      const currentParamsString = JSON.stringify(searchParams)
+      const newParamsString = JSON.stringify(newParams)
+
+      if (currentParamsString === newParamsString) {
+        logger.debug('Skipping duplicate search request')
+        return data ?? { jobs: [], pagination: null }
+      }
+
+      logger.debug('Updating search parameters', {
+        searchQuery: newParams.searchQuery,
+        filters: newParams.filters,
+        pagination: newParams.pagination,
+      })
+      setSearchParams(newParams)
+
+      // Wait for the query to complete and return the result
+      const result = await queryClient.fetchQuery({
+        queryKey: [
+          'jobs',
+          'search',
+          newParams.searchQuery,
+          newParams.filters,
+          newParams.pagination,
+        ],
+        queryFn: async (): Promise<SearchState> => {
+          logger.info('Starting job search API call', {
+            searchQuery: newParams.searchQuery,
+            filters: newParams.filters,
+            pagination: newParams.pagination,
+          })
+          const apiResult = await jobService.searchJobs(
+            newParams.searchQuery,
+            newParams.filters,
+            newParams.pagination
+          )
+          logger.info('Job search API successful', {
+            jobCount: apiResult.jobs?.length || 0,
+            pagination: apiResult.pagination,
+          })
+          return {
+            jobs: apiResult.jobs || [],
+            pagination: apiResult.pagination ?? null,
+          }
+        },
+        staleTime: 5 * 60 * 1000,
       })
 
-      try {
-        // Make API call
-        const result = await jobService.searchJobs(
-          searchQuery,
-          filters,
-          pagination
-        )
-
-        console.log('Job search API successful:', {
-          jobCount: result.jobs?.length || 0,
-          pagination: result.pagination,
-        })
-
-        // Update state
-        const newState: SearchState = {
-          jobs: result.jobs || [],
-          pagination: result.pagination ?? null,
-          lastSearchParams: currentParams,
-        }
-
-        setSearchState(newState)
-        return newState
-      } catch (error) {
-        // Reset state on error
-        const errorState: SearchState = {
-          jobs: [],
-          pagination: null,
-          lastSearchParams: currentParams,
-        }
-
-        setSearchState(errorState)
-
-        // Re-throw for caller to handle if needed
-        throw error
-      }
+      return result
     },
-    [searchState] // Include searchState in dependencies
+    [searchParams, data, queryClient, logger]
   )
 
   /**
    * Clear search results and reset state
    */
   const clearSearch = useCallback((): void => {
-    console.log('Clearing search results')
-    setSearchState({
-      jobs: [],
-      pagination: null,
-      lastSearchParams: null,
-    })
-  }, [])
+    logger.debug('Clearing search results')
+    setSearchParams(null)
+    // Optionally clear related queries from cache
+    queryClient.removeQueries({ queryKey: ['jobs', 'search'] })
+  }, [queryClient, logger])
 
   /**
-   * Retry the last search with same parameters
+   * Retry the last search
    */
-  const retrySearch = useCallback(async (): Promise<
-    SearchState | undefined
-  > => {
-    if (searchState.lastSearchParams) {
-      console.log('Retrying last search...')
-      const params = JSON.parse(
-        searchState.lastSearchParams
-      ) as SearchParameters
-
-      // Temporarily clear lastSearchParams to allow retry
-      setSearchState(prev => ({ ...prev, lastSearchParams: null }))
-
-      return await searchJobs(
-        params.searchQuery,
-        params.filters,
-        params.pagination
-      )
+  const retrySearch = useCallback((): void => {
+    if (searchParams) {
+      logger.info('Retrying last search')
+      refetch()
     } else {
-      console.warn('No previous search to retry')
-      return undefined
+      logger.warn('No previous search to retry')
     }
-  }, [searchState.lastSearchParams, searchJobs])
+  }, [searchParams, refetch, logger])
 
   return {
-    // State (read-only)
-    jobs: searchState.jobs,
-    pagination: searchState.pagination,
+    // State from React Query
+    jobs: data?.jobs ?? [],
+    pagination: data?.pagination ?? null,
+    isLoading,
+    isError,
+    error: error as Error | null,
 
     // Actions
     searchJobs,
