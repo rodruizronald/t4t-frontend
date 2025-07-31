@@ -1,8 +1,9 @@
 import { config } from '@app/config'
 import { Box, Button, Container, Typography } from '@mui/material'
-import { logger } from '@services/logger'
 import { type ErrorInfo, type ReactElement, type ReactNode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+
+import { logger } from '@/services/logging'
 
 interface Props {
   error: Error

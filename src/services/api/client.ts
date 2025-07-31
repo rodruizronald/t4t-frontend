@@ -1,6 +1,7 @@
 import { config } from '@app/config'
-import logger from '@services/logger/logger'
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+
+import logger from '@/services/logging/logger'
 
 export interface ApiError {
   message: string
