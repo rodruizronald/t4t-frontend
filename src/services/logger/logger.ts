@@ -1,7 +1,7 @@
 import { config } from '@app/config'
 import { pino } from 'pino'
 
-import type { ReactLogContext } from './types'
+import type { LogContext } from './types'
 
 // Session ID management
 const getSessionId = (): string => {
@@ -61,11 +61,11 @@ const baseLogger = pino({
   },
 })
 
-class ReactLogger {
+class Logger {
   private logger = baseLogger
 
   // Enhanced logging methods with React context
-  error(message: string, context?: ReactLogContext, error?: Error) {
+  error(message: string, context?: LogContext, error?: Error) {
     const logData = {
       ...context,
       timestamp: new Date().toISOString(),
@@ -88,7 +88,7 @@ class ReactLogger {
     }
   }
 
-  warn(message: string, context?: ReactLogContext) {
+  warn(message: string, context?: LogContext) {
     const logData = {
       ...context,
       timestamp: new Date().toISOString(),
@@ -106,7 +106,7 @@ class ReactLogger {
     }
   }
 
-  info(message: string, context?: ReactLogContext) {
+  info(message: string, context?: LogContext) {
     const logData = {
       ...context,
       timestamp: new Date().toISOString(),
@@ -124,7 +124,7 @@ class ReactLogger {
     }
   }
 
-  debug(message: string, context?: ReactLogContext) {
+  debug(message: string, context?: LogContext) {
     const logData = {
       ...context,
       timestamp: new Date().toISOString(),
@@ -135,7 +135,7 @@ class ReactLogger {
 
   // React-specific methods
   componentMount(componentName: string, props?: Record<string, unknown>) {
-    const context: ReactLogContext = {
+    const context: LogContext = {
       component: componentName,
       action: 'mount',
     }
@@ -168,7 +168,7 @@ class ReactLogger {
   }
 
   apiCall(method: string, url: string, status?: number, duration?: number) {
-    const context: ReactLogContext = {
+    const context: LogContext = {
       action: 'api-call',
       method,
       url,
@@ -187,7 +187,7 @@ class ReactLogger {
   }
 
   performance(metric: string, value: number, component?: string) {
-    const context: ReactLogContext = {
+    const context: LogContext = {
       action: 'performance',
       metric,
       value,
@@ -221,8 +221,7 @@ class ReactLogger {
   }
 }
 
-// Create and export the React logger instance
-const reactLogger = new ReactLogger()
+// Create and export the logger instance
+const logger = new Logger()
 
-export default reactLogger
-export type { ReactLogContext }
+export default logger

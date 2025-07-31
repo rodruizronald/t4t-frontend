@@ -1,4 +1,4 @@
-export interface ReactLogContext {
+export interface LogContext {
   component?: string
   action?: string
   userId?: string
