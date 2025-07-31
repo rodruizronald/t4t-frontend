@@ -1,18 +1,12 @@
-import { config } from '@app/config'
+import type { ApiError } from '@services/api/client'
+import { apiClient } from '@services/api/client'
 
 import type { FilterState } from '../constants/defaultFilters'
+import type { ApiSearchResponse } from '../types/api'
 import type { SearchResponse } from '../types/models'
 import type { PaginationParams } from '../types/pagination'
-import { buildApiParams, buildApiUrl } from './paramsBuilder'
+import { buildApiParams } from './paramsBuilder'
 import { transformSearchResponse } from './transformer'
-
-/**
- * Error response from the job API
- */
-interface ApiError {
-  message: string
-  type: string
-}
 
 /**
  * Extended search response with possible error
@@ -25,12 +19,6 @@ interface SearchResponseWithError extends SearchResponse {
  * Job API service
  */
 class JobService {
-  private baseUrl: string
-
-  constructor() {
-    this.baseUrl = config.apiUrl
-  }
-
   /**
    * Search for jobs using the API
    * @param searchQuery - The search query
@@ -46,35 +34,19 @@ class JobService {
     try {
       // Build API parameters
       const apiParams = buildApiParams(searchQuery, filters, pagination)
-      const apiUrl = buildApiUrl(this.baseUrl, '/jobs', apiParams)
 
-      // Make the API call
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+      // Make the API call using ApiClient
+      const rawData = await apiClient.get<ApiSearchResponse>('/jobs', {
+        params: apiParams,
       })
-
-      if (!response.ok) {
-        throw new Error(
-          `API request failed: ${response.status} ${response.statusText}`
-        )
-      }
-
-      // Parse response
-      const rawData = await response.json()
-      console.log('Raw API Data:', rawData)
 
       // Transform response to frontend format
       const transformedData = transformSearchResponse(rawData)
-      console.log('Transformed Data:', transformedData)
 
       return transformedData
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error'
+      // ApiClient already handles error transformation
+      const apiError = error as ApiError
 
       return {
         jobs: [],
@@ -84,10 +56,7 @@ class JobService {
           offset: ((pagination.page ?? 1) - 1) * (pagination.pageSize ?? 20),
           hasMore: false,
         },
-        error: {
-          message: errorMessage,
-          type: 'API_ERROR',
-        },
+        error: apiError,
       }
     }
   }
