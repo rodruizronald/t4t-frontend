@@ -1,6 +1,6 @@
 import { config } from '@app/config'
+import { useLogger } from '@services/logger'
 import JobLayout from '@shared/components/layout/JobLayout'
-import { useLogger } from '@shared/utils/logger'
 import { type ReactElement } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 

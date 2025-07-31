@@ -1,6 +1,8 @@
 import { config } from '@app/config'
 import { pino } from 'pino'
 
+import type { ReactLogContext } from './types'
+
 // Session ID management
 const getSessionId = (): string => {
   let sessionId = sessionStorage.getItem('log-session-id')
@@ -58,22 +60,6 @@ const baseLogger = pino({
     },
   },
 })
-
-// React-specific logger interface
-interface ReactLogContext {
-  component?: string
-  action?: string
-  userId?: string
-  props?: Record<string, unknown>
-  state?: Record<string, unknown>
-  metric?: string
-  value?: number
-  method?: string
-  url?: string
-  status?: number
-  duration?: number
-  [key: string]: unknown
-}
 
 class ReactLogger {
   private logger = baseLogger
@@ -240,34 +226,3 @@ const reactLogger = new ReactLogger()
 
 export default reactLogger
 export type { ReactLogContext }
-
-// Hook for easy component-level logging
-export const useLogger = (componentName: string) => {
-  return {
-    error: (
-      message: string,
-      context?: Omit<ReactLogContext, 'component'>,
-      error?: Error
-    ) =>
-      reactLogger.error(
-        message,
-        { ...context, component: componentName },
-        error
-      ),
-
-    warn: (message: string, context?: Omit<ReactLogContext, 'component'>) =>
-      reactLogger.warn(message, { ...context, component: componentName }),
-
-    info: (message: string, context?: Omit<ReactLogContext, 'component'>) =>
-      reactLogger.info(message, { ...context, component: componentName }),
-
-    debug: (message: string, context?: Omit<ReactLogContext, 'component'>) =>
-      reactLogger.debug(message, { ...context, component: componentName }),
-
-    userAction: (action: string, data?: Record<string, unknown>) =>
-      reactLogger.userAction(action, componentName, data),
-
-    performance: (metric: string, value: number) =>
-      reactLogger.performance(metric, value, componentName),
-  }
-}
