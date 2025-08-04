@@ -37,6 +37,7 @@ interface UseJobSearchReturn {
   jobs: Job[]
   pagination: SearchState['pagination']
   isLoading: boolean
+  isFetching: boolean
   isError: boolean
   error: Error | null
   searchJobs: (
@@ -72,7 +73,7 @@ export function useJobSearch(): UseJobSearchReturn {
     : (['jobs', 'search', 'empty'] as const)
 
   // Use React Query for the actual API call
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery({
     queryKey,
     queryFn: async (): Promise<SearchState> => {
       if (!searchParams) {
@@ -219,6 +220,7 @@ export function useJobSearch(): UseJobSearchReturn {
     jobs: data?.jobs ?? [],
     pagination: data?.pagination ?? null,
     isLoading,
+    isFetching,
     isError,
     error: error as Error | null,
 
