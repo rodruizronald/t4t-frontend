@@ -1,3 +1,3 @@
 export { useLogger } from './hooks'
 export { default as logger } from './logger'
-export type { ReactLogContext } from './types'
+export type { LogContext } from './types'

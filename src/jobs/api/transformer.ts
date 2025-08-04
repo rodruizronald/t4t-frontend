@@ -1,3 +1,5 @@
+import { LogContext, logger } from '@/services/logging'
+
 import {
   ApiJob,
   ApiRequirements,
@@ -109,7 +111,19 @@ const transformPostedDate = (apiPostedAt?: string): string => {
 
     return `${Math.floor(diffInDays / 30)} months ago`
   } catch (error) {
-    console.warn('Error parsing posted date:', apiPostedAt, error)
+    const logContext: LogContext = {
+      component: 'transformer',
+      action: 'date-transformation',
+      apiPostedAt,
+      errorType: error instanceof Error ? error.name : 'unknown',
+      inputValue: apiPostedAt,
+      ...(error instanceof Error && {
+        errorMessage: error.message,
+        errorStack: error.stack,
+      }),
+    }
+
+    logger.warn('Error parsing posted date', logContext)
     return 'unknown'
   }
 }
