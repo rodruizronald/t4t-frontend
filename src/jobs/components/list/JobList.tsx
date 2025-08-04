@@ -10,6 +10,7 @@ interface JobListProps {
   selectedJobId?: string
   onJobSelect: (job: Job) => void
   isLoading?: boolean
+  isFetching?: boolean
   resultsCount?: number
   searchQuery?: string
   // Pagination props
@@ -23,6 +24,7 @@ export default function JobList({
   selectedJobId,
   onJobSelect,
   isLoading = false,
+  isFetching = false,
   resultsCount = 0,
   searchQuery = '',
   // Pagination props
@@ -42,6 +44,12 @@ export default function JobList({
         borderRadius: 2,
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
+        // Fade effect during API calls
+        opacity: isFetching ? 0.6 : 1,
+        transition: 'opacity 250ms ease-in-out',
+        // Disable interactions during API calls
+        pointerEvents: isFetching ? 'none' : 'auto',
+        cursor: isFetching ? 'not-allowed' : 'default',
       }}
     >
       {/* Sticky Header */}
@@ -73,7 +81,7 @@ export default function JobList({
       <Box
         sx={{
           flex: 1,
-          overflow: 'auto', // This container scrolls
+          overflow: isFetching ? 'hidden' : 'auto', // Disable scrolling during API calls
           minHeight: 0, // Important for flex scrolling
           display: 'flex',
           flexDirection: 'column',

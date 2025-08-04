@@ -11,9 +11,13 @@ import type { Job } from '../../types/models'
 
 interface JobDetailsProps {
   job?: Job | null
+  isFetching?: boolean
 }
 
-export default function JobDetails({ job }: JobDetailsProps) {
+export default function JobDetails({
+  job,
+  isFetching = false,
+}: JobDetailsProps) {
   const [showStickyHeader, setShowStickyHeader] = useState(false)
   const headerRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -49,6 +53,12 @@ export default function JobDetails({ job }: JobDetailsProps) {
         borderRadius: 2,
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
+        // Fade effect during API calls
+        opacity: isFetching ? 0.6 : 1,
+        transition: 'opacity 250ms ease-in-out',
+        // Disable interactions during API calls
+        pointerEvents: isFetching ? 'none' : 'auto',
+        cursor: isFetching ? 'not-allowed' : 'default',
       }}
     >
       {/* Sticky Header */}
@@ -121,7 +131,7 @@ export default function JobDetails({ job }: JobDetailsProps) {
         ref={scrollContainerRef}
         sx={{
           flex: 1,
-          overflow: 'auto',
+          overflow: isFetching ? 'hidden' : 'auto', // Disable scrolling during API calls
           p: job ? 3 : 4,
         }}
       >

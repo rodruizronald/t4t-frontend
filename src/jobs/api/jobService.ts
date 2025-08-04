@@ -32,6 +32,10 @@ class JobService {
     pagination: PaginationParams = {}
   ): Promise<SearchResponseWithError> {
     try {
+      // TEMPORARY: Add 2-second delay for testing fade effect
+      // TODO: Remove this delay before production
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
       // Build API parameters
       const apiParams = buildApiParams(searchQuery, filters, pagination)
 

@@ -34,6 +34,7 @@ export default function JobLayout(): ReactElement {
   const {
     jobs: apiJobs,
     pagination: apiPagination,
+    isFetching,
     searchJobs,
   } = useJobSearch()
 
@@ -138,6 +139,7 @@ export default function JobLayout(): ReactElement {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
+            isFetching={isFetching}
           />
         </Box>
 
@@ -150,7 +152,7 @@ export default function JobLayout(): ReactElement {
             minHeight: 0, // Important for scrolling
           }}
         >
-          <JobDetails job={selectedJob} />
+          <JobDetails job={selectedJob} isFetching={isFetching} />
         </Box>
       </Box>
     </Box>
