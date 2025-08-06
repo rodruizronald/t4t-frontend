@@ -58,6 +58,7 @@ export interface ApiJob {
   company_logo_url?: string
   description: string
   responsibilities?: string[]
+  main_technologies?: string[]
   benefits?: string[]
   application_url: string
   experience_level: string
