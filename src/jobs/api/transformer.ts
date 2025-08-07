@@ -1,11 +1,6 @@
 import { LogContext, logger } from '@/services/logging'
 
-import {
-  ApiJob,
-  ApiRequirements,
-  ApiSearchResponse,
-  ApiTechnology,
-} from '../types/api'
+import { ApiJob, ApiRequirements, ApiSearchResponse } from '../types/api'
 import { Job, SearchResponse } from '../types/models'
 
 /**
@@ -45,7 +40,7 @@ export const transformJob = (apiJob: ApiJob | null | undefined): Job | null => {
     requirements: transformRequirements(apiJob.requirements),
 
     // Technologies (transform array of objects to array of strings)
-    technologies: transformTechnologies(apiJob.technologies),
+    technologies: apiJob.main_technologies ?? [],
 
     // Date information
     postedDate: transformPostedDate(apiJob.posted_at),
@@ -66,17 +61,6 @@ const transformRequirements = (
     mustHave: apiRequirements.must_have ?? [],
     niceToHave: apiRequirements.nice_to_have ?? [],
   }
-}
-
-/**
- * Transform technologies array from API format
- * @param apiTechnologies - Technologies array from API
- * @returns Array of technology names
- */
-const transformTechnologies = (apiTechnologies?: ApiTechnology[]): string[] => {
-  if (!Array.isArray(apiTechnologies)) return []
-
-  return apiTechnologies.map(tech => tech.name)
 }
 
 /**
