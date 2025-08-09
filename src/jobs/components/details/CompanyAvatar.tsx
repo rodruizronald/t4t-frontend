@@ -20,12 +20,11 @@ export default function CompanyAvatar({
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '')
 
-    return `/src/assets/company-logos/${normalizedName}.png`
+    return `/src/assets/company_logos/${normalizedName}.jpeg`
   }
 
   const logoPath = getLogoPath(company)
   const showImage = !imageError
-
   return (
     <Avatar
       sx={{

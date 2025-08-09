@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
 
-import Pagination from '@/shared/components/ui/Pagination'
+import Pagination from '@/shared/components/Pagination'
 
 import type { Job } from '../../types/models'
 import JobListItem from './JobListItem'

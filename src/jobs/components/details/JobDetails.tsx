@@ -4,10 +4,11 @@ import {
   TrendingUp,
   WorkOutline,
 } from '@mui/icons-material'
-import { Avatar, Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 
 import type { Job } from '../../types/models'
+import CompanyAvatar from './CompanyAvatar'
 
 interface JobDetailsProps {
   job?: Job | null
@@ -143,17 +144,7 @@ export default function JobDetails({
               <Box
                 sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}
               >
-                <Avatar
-                  sx={{
-                    bgcolor: '#0a66c2',
-                    width: 56,
-                    height: 56,
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {job.company?.charAt(0)?.toUpperCase() || 'C'}
-                </Avatar>
+                <CompanyAvatar company={job.company} size={56} />
                 <Typography
                   variant='h5'
                   sx={{ fontWeight: 600, color: '#333' }}
