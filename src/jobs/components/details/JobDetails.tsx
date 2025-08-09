@@ -5,10 +5,10 @@ import {
   WorkOutline,
 } from '@mui/icons-material'
 import { Box, Button, Stack, Typography } from '@mui/material'
+import CompanyAvatar from '@shared/components/CompanyAvatar'
 import { useEffect, useRef, useState } from 'react'
 
 import type { Job } from '../../types/models'
-import CompanyAvatar from './CompanyAvatar'
 
 interface JobDetailsProps {
   job?: Job | null
