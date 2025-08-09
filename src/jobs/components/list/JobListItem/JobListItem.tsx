@@ -1,4 +1,5 @@
-import { Avatar, Box, Divider, Typography } from '@mui/material'
+import { Box, Divider, Typography } from '@mui/material'
+import CompanyAvatar from '@shared/components/CompanyAvatar'
 
 import type { Job } from '../../../types/models'
 
@@ -43,17 +44,7 @@ export default function JobListItem({
             gap: 2,
           }}
         >
-          <Avatar
-            sx={{
-              bgcolor: '#0a66c2',
-              width: 48,
-              height: 48,
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-            }}
-          >
-            {company?.charAt(0)?.toUpperCase() || 'C'}
-          </Avatar>
+          <CompanyAvatar company={company} size={48} />
 
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography

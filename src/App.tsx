@@ -1,10 +1,10 @@
 import { config } from '@app/config'
-import JobLayout from '@shared/components/layout/JobLayout'
 import { type ReactElement } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { QueryProvider } from '@/app/providers/QueryProvider'
 import { useLogger } from '@/services/logging'
+import JobLayout from '@/shared/components/JobLayout'
 
 function App(): ReactElement {
   const logger = useLogger('App')
