@@ -30,12 +30,14 @@ export default function CompanyAvatar({
 
   return (
     <Avatar
+      variant='rounded'
       sx={{
         bgcolor: showImage ? 'transparent' : '#0a66c2',
         width: size,
         height: size,
         fontSize: `${size * 0.027}rem`,
         fontWeight: 'bold',
+        borderRadius: 2,
       }}
     >
       {showImage ? (
