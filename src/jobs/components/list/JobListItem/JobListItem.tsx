@@ -44,7 +44,7 @@ export default function JobListItem({
             gap: 2,
           }}
         >
-          <CompanyAvatar company={company} size={58} />
+          <CompanyAvatar company={company} size={60} />
 
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography
