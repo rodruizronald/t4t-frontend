@@ -64,6 +64,7 @@ export default function Header({
           >
             <Button
               variant='contained'
+              disabled
               sx={{
                 bgcolor: '#0a66c2',
                 minWidth: 80,
@@ -72,6 +73,10 @@ export default function Header({
                 fontWeight: 'bold',
                 fontSize: 'body1.fontSize',
                 '&:hover': { bgcolor: '#004182' },
+                '&.Mui-disabled': {
+                  bgcolor: '#0a66c2',
+                  color: 'white',
+                },
               }}
             >
               JobHub
